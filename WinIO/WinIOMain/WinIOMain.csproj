@@ -91,6 +91,7 @@
     <Reference Include="FluentWPF, Version=0.8.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentWPF.0.8.0\lib\net45\FluentWPF.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -98,7 +99,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\Python.Runtime.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -118,16 +119,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="lib\Python.Runtime.dll" />
+    <EmbeddedResource Include="lib\Python.Runtime.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinIO\WinIO.csproj">
       <Project>{55a505fd-30fe-4f4d-a14d-b0bfea3f64dd}</Project>
       <Name>WinIO</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lib\FluentWPF.dll" />
+    <EmbeddedResource Include="lib\FluentWPF.dll" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -145,10 +147,10 @@
   <ItemGroup>
     <PackageReference Include="ILMerge" Version="3.0.29" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="lib\WinIO.dll" />
+  </ItemGroup>
   <Target Name="ILMerge">
-    <Exec Command="$(ILMergeConsolePath) Bin\x64\Release\WinIOMain.exe ^
-    /out:WinIOMainPacked.exe ^
-    Bin\x64\Release\Python.Runtime.dll ^
-    Bin\x64\Release\FluentWPF.dll " />
+    <Exec Command="$(ILMergeConsolePath) Bin\x64\Release\WinIOMain.exe ^&#xD;&#xA;    /out:WinIOMainPacked.exe ^&#xD;&#xA;    Bin\x64\Release\Python.Runtime.dll ^&#xD;&#xA;    Bin\x64\Release\FluentWPF.dll " />
   </Target>
 </Project>
