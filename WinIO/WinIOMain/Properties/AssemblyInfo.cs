@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("WinIOMain")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("WinIO")]
+[assembly: AssemblyDescription("Author Hongkang, 花里胡哨的IO工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WinIOMain")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("Personal.HK")]
+[assembly: AssemblyProduct("WinIO")]
+[assembly: AssemblyCopyright("Author Hongkang, Copyright © 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
