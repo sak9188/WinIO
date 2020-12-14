@@ -211,9 +211,9 @@ Value="0"/>
              PopupAnimation="Fade">
                     <Border x:Name="SubmenuBorder"
                 SnapsToDevicePixels="True"
-                BorderThickness="0"
-                Background="{DynamicResource SystemBaseLowColorBrush}"
-                BorderBrush="{DynamicResource ImmersiveSystemAccentLight1Brush}">
+                BorderThickness="1"
+                Background="{DynamicResource SystemAltMediumHighColorBrush}"
+                BorderBrush="{DynamicResource SystemAltLowColorBrush}">
                         <ScrollViewer CanContentScroll="True"
                         Style="{StaticResource MenuScrollViewer}">
                             <StackPanel IsItemsHost="True"
@@ -264,7 +264,7 @@ Value="0"/>
              Value="true">
                 <Setter Property="Background" TargetName="Border" >
                     <Setter.Value>
-                        <SolidColorBrush Color="Pink"></SolidColorBrush>
+                        <SolidColorBrush Color="Black"></SolidColorBrush>
                     </Setter.Value>
                 </Setter>
             </Trigger>
@@ -283,16 +283,16 @@ Value="0"/>
     <!-- SubmenuItem -->
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuItemTemplateKey}"
                  TargetType="{x:Type MenuItem}">
-        <Border x:Name="Border"
+        <Border x:Name="Border" Background="Transparent"
           BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"
+                    <ColumnDefinition Width="30"
                           SharedSizeGroup="Icon" />
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto"
                           SharedSizeGroup="Shortcut" />
-                    <ColumnDefinition Width="13" />
+                    <ColumnDefinition Width="15" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon"
                         Margin="6,0,6,0"
@@ -331,12 +331,12 @@ Value="0"/>
                         </LinearGradientBrush>
                     </Border.Background>
                     <Path x:Name="CheckMark"
-              Width="7"
-              Height="7"
-              Visibility="Hidden"
-              SnapsToDevicePixels="False"
-              StrokeThickness="2"
-              Data="M 0 0 L 7 7 M 0 7 L 7 0">
+                          Width="7"
+                          Height="7"
+                          Visibility="Hidden"
+                          SnapsToDevicePixels="False"
+                          StrokeThickness="2"
+                          Data="M 0 0 L 7 7 M 0 7 L 7 0">
                         <Path.Stroke>
                             <SolidColorBrush Color="{DynamicResource GlyphColor}" />
                         </Path.Stroke>
@@ -345,6 +345,7 @@ Value="0"/>
                 <ContentPresenter x:Name="HeaderHost"
                         Grid.Column="1"
                         ContentSource="Header"
+                        Margin="0,7,30,7" TextBlock.TextAlignment="Center"
                         RecognizesAccessKey="True" />
                 <TextBlock x:Name="InputGestureText"
                  Grid.Column="2"
@@ -382,7 +383,7 @@ Value="0"/>
              Value="true">
                 <Setter Property="Background" TargetName="Border" Value="{DynamicResource SystemBaseMediumLowColorBrush}">
                 </Setter>
-                <Setter Property="BorderBrush" TargetName="Border" Value="{DynamicResource SystemBaseLowColorBrush}">
+                <Setter Property="BorderBrush" TargetName="Border" Value="{DynamicResource SystemBaseMediumLowColorBrush}">
                 </Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
@@ -394,15 +395,15 @@ Value="0"/>
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuHeaderTemplateKey}"
                  TargetType="{x:Type MenuItem}">
         <Border x:Name="Border"
-          BorderThickness="1">
+          BorderThickness="1" Background="Transparent">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"
+                    <ColumnDefinition Width="30"
                           SharedSizeGroup="Icon" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto"
                           SharedSizeGroup="Shortcut" />
-                    <ColumnDefinition Width="13" />
+                    <ColumnDefinition Width="15" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon"
                         Margin="6,0,6,0"
@@ -411,7 +412,9 @@ Value="0"/>
                 <ContentPresenter x:Name="HeaderHost"
                         Grid.Column="1"
                         ContentSource="Header"
-                        RecognizesAccessKey="True" />
+                        Margin="0,7,30,7" TextBlock.TextAlignment="Center"
+                        RecognizesAccessKey="True">
+                </ContentPresenter>
                 <TextBlock x:Name="InputGestureText"
                  Grid.Column="2"
                  Text="{TemplateBinding InputGestureText}"
@@ -430,16 +433,13 @@ Value="0"/>
              HorizontalOffset="0"
              VerticalOffset="-2"
              IsOpen="{TemplateBinding IsSubmenuOpen}"
-             AllowsTransparency="True"
              Focusable="False"
              PopupAnimation="Fade">
                     <Border x:Name="SubmenuBorder"
                 SnapsToDevicePixels="True"
-                Background="{DynamicResource SystemBaseMediumColorBrush}"
-                BorderThickness="1">
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="Green" />
-                        </Border.BorderBrush>
+                BorderThickness="1"
+                Background="{DynamicResource SystemAltMediumHighColorBrush}"
+                BorderBrush="{DynamicResource SystemAltLowColorBrush}">
                         <ScrollViewer CanContentScroll="True"
                         Style="{StaticResource MenuScrollViewer}">
                             <StackPanel IsItemsHost="True"
@@ -458,24 +458,10 @@ Value="0"/>
             </Trigger>
             <Trigger Property="IsHighlighted"
              Value="true">
-                <Setter Property="Background" TargetName="Border" Value="{DynamicResource SystemBaseMediumHighColorBrush}">
+                <Setter Property="Background" TargetName="Border" Value="{DynamicResource SystemBaseMediumLowColorBrush}">
                 </Setter>
-                <Setter Property="BorderBrush"
-              TargetName="Border">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource SystemBaseMediumColor}"></SolidColorBrush>
-                    </Setter.Value>
+                <Setter Property="BorderBrush" TargetName="Border" Value="{DynamicResource SystemBaseMediumLowColorBrush}">
                 </Setter>
-            </Trigger>
-            <Trigger SourceName="Popup"
-             Property="AllowsTransparency"
-             Value="True">
-                <Setter TargetName="SubmenuBorder"
-              Property="CornerRadius"
-              Value="4" />
-                <Setter TargetName="SubmenuBorder"
-              Property="Padding"
-              Value="0" />
             </Trigger>
             <Trigger Property="IsEnabled"
              Value="false">
