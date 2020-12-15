@@ -41,13 +41,12 @@ namespace WinIO.IOConsole
             using (Py.GIL())
             {
                 dynamic sys = Py.Import("sys");
-                Console.WriteLine(sys.path);
-                dynamic hel = Py.Import("WinIO.Hello");
-                hel.APP = WinIOAPP.Instance;
-                hel.do_some();
+                dynamic app = Py.Import("WinIO.CSharp.APP");
+                sys.modules["WinIO.CSharp.APP"] = WinIOAPP.Instance.ToPython();
+                dynamic io = Py.Import("WinIO.WinIO");
+                io.init_winio();
             }
             Console.ReadKey();
-
         }
     }
 }

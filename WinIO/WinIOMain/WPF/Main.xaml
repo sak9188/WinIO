@@ -42,15 +42,27 @@
         </Setter>
     </Style>
 
-    <Style x:Key="OuputTextBox" TargetType="TextBox">
+    <Style x:Key="OutputTextBox" TargetType="RichTextBox">
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="IsReadOnly" Value="True"/>
         <Setter Property="Foreground" Value="{DynamicResource SystemBaseMediumHighColorBrush}"/>
         <Setter Property="Background" Value="#90000000"/>
-        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+    </Style>
+
+    <Style x:Key="InputTextBox" TargetType="RichTextBox">
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+
+    <Style x:Key="BoxFlowDocument" TargetType="FlowDocument">
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="LineHeight" Value="1" />
     </Style>
 
 </ResourceDictionary>

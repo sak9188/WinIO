@@ -58,36 +58,10 @@
             </MenuItem>
         </Menu>
         <TabControl Background="Transparent" Grid.Row="1" x:Name="TabControl0"
-                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    >
-            <TabItem Header="WinIO-输出" Name="Tab0Item0">
-                <Grid Background="Transparent">
-                    <TextBox x:Name="IOOutput0" Style="{StaticResource OuputTextBox}"
-                             Text="123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123"/>
-
-                </Grid>
-            </TabItem>
-
-            <!--<WrapPanel>
-                    <TextBox x:Name="IOOutput" 
-                        AcceptsReturn="True" IsReadOnly="True"
-                        Foreground="{DynamicResource SystemBaseMediumHighColorBrush}"
-                        Background="#90000000"
-                        FontSize="13"  BorderThickness="0"
-                        HorizontalScrollBarVisibility="Auto"
-                        VerticalScrollBarVisibility="Auto"
-                        Text="123123 123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123">
-                        -->
-            <!--<TextBox.Height>
-                            <MultiBinding Converter="{ikriv:MathConverter}" ConverterParameter="x-y-5">
-                                <Binding ElementName="Splitter0" Path="ActualHeight"/>
-                                <Binding ElementName="TabItem0" Path="ActualHeight" />
-                            </MultiBinding>
-                        </TextBox.Height>-->
-            <!--
-                    </TextBox>
-                </WrapPanel>-->
+                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}">
         </TabControl>
+        
+        
         <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
         <TabControl Background="Transparent" Grid.Row="1" Grid.Column="2" Name="TabControl1"
@@ -133,3 +107,23 @@
 
     </Grid>
 </fw:AcrylicWindow>
+
+<!--<WrapPanel>
+                    <TextBox x:Name="IOOutput" 
+                        AcceptsReturn="True" IsReadOnly="True"
+                        Foreground="{DynamicResource SystemBaseMediumHighColorBrush}"
+                        Background="#90000000"
+                        FontSize="13"  BorderThickness="0"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto"
+                        Text="123123 123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123">
+                        -->
+<!--<TextBox.Height>
+                            <MultiBinding Converter="{ikriv:MathConverter}" ConverterParameter="x-y-5">
+                                <Binding ElementName="Splitter0" Path="ActualHeight"/>
+                                <Binding ElementName="TabItem0" Path="ActualHeight" />
+                            </MultiBinding>
+                        </TextBox.Height>-->
+<!--
+                    </TextBox>
+                </WrapPanel>-->
