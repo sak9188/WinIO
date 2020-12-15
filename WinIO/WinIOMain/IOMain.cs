@@ -5,16 +5,17 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using WinIO.WPF;
 
 namespace WinIO.IOConsole
 {
     class IOMain
     {
-        // static WinIOApp application = null;
-
         private static Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
         {
             string resourceName = new AssemblyName(args.Name).Name;
@@ -36,21 +37,17 @@ namespace WinIO.IOConsole
 
         static void RealMain()
         {
-            WinIOApp application = new WinIOApp();
-
+            WinIOAPP.RunWindow();
             using (Py.GIL())
             {
                 dynamic sys = Py.Import("sys");
                 Console.WriteLine(sys.path);
-
-                application.Run(new MainWindow());
+                dynamic hel = Py.Import("WinIO.Hello");
+                hel.APP = WinIOAPP.Instance;
+                hel.do_some();
             }
+            Console.ReadKey();
 
-            //Thread worker = new Thread(new ThreadStart(LoadWpfApp));
-            //worker.SetApartmentState(ApartmentState.STA);
-            //worker.Name = "WpfThread";
-            //worker.IsBackground = true;
-            //worker.Start();
         }
     }
 }

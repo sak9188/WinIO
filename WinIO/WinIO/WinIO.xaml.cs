@@ -13,5 +13,11 @@ namespace WinIO.WPF
     /// </summary>
     public partial class WinIOApp : Application
     {
+        public WinIOApp()
+        {
+            ResourceDictionary rd = new ResourceDictionary();
+            rd.Source = new Uri("pack://application:,,,/FluentWPF;component/Styles/Controls.xaml");
+            this.Resources.MergedDictionaries.Add(rd);
+        }
     }
 }

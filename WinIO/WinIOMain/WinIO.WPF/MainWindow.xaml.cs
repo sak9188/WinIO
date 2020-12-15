@@ -20,6 +20,8 @@ namespace WinIO.WPF
     /// </summary>
     public partial class MainWindow
     {
+        private List<Window> windows = new List<Window>();
+
         private List<TabControl> tabs = new List<TabControl>();
 
         private TabItem CreateTabItem(string name)
@@ -38,6 +40,8 @@ namespace WinIO.WPF
         {
             if(tabs.Count > tabPanel)
             {
+                Tab0Item0.Header = name;
+                Console.WriteLine(name);
                 tabs[(int)tabPanel].Items.Add(CreateTabItem(name));
             }
         }
@@ -64,7 +68,6 @@ namespace WinIO.WPF
         {
             InitializeComponent();
             Init();
-            CreateOutputTabPanel(1, "test");
         }
 
         private void Init()
@@ -73,5 +76,6 @@ namespace WinIO.WPF
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);
         }
+
     }
 }
