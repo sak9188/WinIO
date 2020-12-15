@@ -40,9 +40,9 @@ namespace WinIO.IOConsole
             WinIOAPP.RunWindow();
             using (Py.GIL())
             {
-                dynamic sys = Py.Import("sys");
-                dynamic app = Py.Import("WinIO.CSharp.APP");
-                sys.modules["WinIO.CSharp.APP"] = WinIOAPP.Instance.ToPython();
+                // dynamic sys = Py.Import("sys");
+                dynamic CSharp = Py.Import("WinIO.CSharp");
+                CSharp.APP = WinIOAPP.Instance;
                 dynamic io = Py.Import("WinIO.WinIO");
                 io.init_winio();
             }
