@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIO", "WinIO\WinIO.csproj", "{55A505FD-30FE-4F4D-A14D-B0BFEA3F64DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIO", "WinIO\WinIO.WPF.csproj", "{55A505FD-30FE-4F4D-A14D-B0BFEA3F64DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIOMain", "WinIOMain\WinIOMain.csproj", "{42EC411A-C585-4944-B4F2-400468F66033}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIOMain", "WinIOMain\WinIO.csproj", "{42EC411A-C585-4944-B4F2-400468F66033}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
