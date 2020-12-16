@@ -86,12 +86,9 @@
     </LinearGradientBrush>
 
     <Style x:Key="MenuScrollButton" TargetType="{x:Type RepeatButton}" BasedOn="{x:Null}">
-        <Setter Property="ClickMode"
-Value="Hover"/>
-        <Setter Property="MinWidth"
-Value="0"/>
-        <Setter Property="MinHeight"
-Value="0"/>
+        <Setter Property="ClickMode" Value="Hover"/>
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="MinHeight" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">

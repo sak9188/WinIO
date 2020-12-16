@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{42EC411A-C585-4944-B4F2-400468F66033}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>WinIO</RootNamespace>
     <AssemblyName>WinIOMain</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -87,6 +87,9 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentWPF, Version=0.8.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -115,8 +118,12 @@
   <ItemGroup>
     <Compile Include="IOMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WPF\Control\Control.cs" />
+    <Compile Include="WPF\Control\IOMenuItem.cs" />
     <Compile Include="WPF\Control\IORichTextBox.cs" />
+    <Compile Include="WPF\Control\IOTabItem.cs" />
     <Compile Include="WPF\Converter\MathConverter.cs" />
+    <Compile Include="WPF\ExportPython\MenuItem.cs" />
     <Compile Include="WPF\ExportPython\TabItem.cs" />
     <Compile Include="WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -155,9 +162,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="WPF\Control\RDMenu.xaml">
+    <Page Include="WPF\Control\Control.Menu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WPF\Control\Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WPF\Main.xaml">
       <Generator>MSBuild:Compile</Generator>

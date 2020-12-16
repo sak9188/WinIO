@@ -38,15 +38,14 @@ namespace WinIO.IOConsole
         static void RealMain()
         {
             WinIOAPP.RunWindow();
-            using (Py.GIL())
-            {
-                // dynamic sys = Py.Import("sys");
-                dynamic CSharp = Py.Import("WinIO.CSharp");
-                CSharp.APP = WinIOAPP.Instance;
-                dynamic io = Py.Import("WinIO.WinIO");
-                io.init_winio();
-            }
-            Console.ReadKey();
+            PythonEngine.Initialize();
+            // dynamic sys = Py.Import("sys");
+            dynamic CSharp = Py.Import("WinIO.CSharp");
+            CSharp.APP = WinIOAPP.Instance;
+            dynamic io = Py.Import("WinIOStart");
+            WinIOAPP.WindowThread.Join();
+            WinIOAPP.WindowThread.Abort();
+            PythonEngine.Shutdown();
         }
     }
 }

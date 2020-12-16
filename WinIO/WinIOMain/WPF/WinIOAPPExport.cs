@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace WinIO.WPF
 {
     public partial class WinIOAPP : Application
     {
+        public ExportPython.MenuItem CreateMenuItem(string header, bool toplevel=false)
+        {
+            return new ExportPython.MenuItem(header, toplevel);
+        }
+
         public ExportPython.TabItem CreateOutputTab(uint tabPanel, string name)
         {
             Func<uint, string, ExportPython.TabItem> del = (u, s) => { return ((MainWindow)Instance.MainWindow).CreateOutputTab(u, s); };
@@ -27,10 +33,6 @@ namespace WinIO.WPF
             Instance.Dispatcher.Invoke(del, tabPanel);
         }
 
-        public void CloseTab(uint tabPanel, ExportPython.TabItem item)
-        {
-            Action<uint, ExportPython.TabItem> del = (u, s) => { ((MainWindow)Instance.MainWindow).CloseTab(u, s); };
-            Instance.Dispatcher.Invoke(del, tabPanel, item);
-        }
+
     }
 }

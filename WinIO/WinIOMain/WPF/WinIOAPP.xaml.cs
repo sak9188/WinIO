@@ -20,20 +20,27 @@ namespace WinIO.WPF
 
         public static WinIOAPP Instance { get { return lazy.Value; } }
 
+        public static Thread WindowThread;
+
         private static void LoadMainWindow()
         {
-            Instance.MainWindow = new MainWindow();
+            Instance.MainWindow = new MainWindow(Thread.CurrentThread);
             Instance.MainWindow.Show();
+            var dispatcher = Instance.MainWindow.Dispatcher;
+            Instance.MainWindow.Closed += (sender, e) => 
+            {
+                dispatcher.InvokeShutdown();
+            };
             Dispatcher.Run();
         }
 
         public static void RunWindow()
         {
-            Thread worker = new Thread(new ThreadStart(LoadMainWindow));
-            worker.SetApartmentState(ApartmentState.STA);
-            worker.Name = "WPFThread";
-            worker.IsBackground = true;
-            worker.Start();
+            WindowThread = new Thread(new ThreadStart(LoadMainWindow));
+            WindowThread.SetApartmentState(ApartmentState.STA);
+            WindowThread.Name = "WPFThread";
+            WindowThread.IsBackground = true;
+            WindowThread.Start();
         }
     }
 }
