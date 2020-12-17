@@ -54,6 +54,22 @@ namespace WinIO.WPF.ExportPython
             }
         }
 
+        public string header;
+
+        public string Header
+        {
+            set 
+            {
+                header = value;
+                SetHeader(value);
+            }
+            get 
+            {
+                return header;
+            }
+        }
+
+
         #region 隐藏设置方法
         private bool SetFontSize(double fontsize)
         {
@@ -66,7 +82,19 @@ namespace WinIO.WPF.ExportPython
             Func<IOTabItem, string, bool> del = (i, s) => { return i.SetFontFamily(s); };
             return (bool)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, fontFamily);
         }
+
+        private void SetHeader(string str)
+        {
+            Action<IOTabItem, string> del = (i, s) => { i.Header = s; };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, str);
+        }
         #endregion
+
+        public bool IsCurrentTab()
+        {
+            Func<IOTabItem, bool> del = (i) => { return i.IsCurrent(); };
+            return (bool)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
 
         public void AddButton(string str, PyObject click)
         {
@@ -86,10 +114,29 @@ namespace WinIO.WPF.ExportPython
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, str, color, fontfamily, fontsize);
         }
 
-        public void CloseTab(uint tabPanel)
+        public void Close()
         {
-            Action<uint, System.Windows.Controls.TabItem> del = (u, s) => { ((MainWindow)WinIOAPP.Instance.MainWindow).CloseTab(u, s); };
-            WinIOAPP.Instance.Dispatcher.Invoke(del, tabPanel, (IOTabItem)this);
+            Action<IOTabItem> del = (s) => { ((MainWindow)WinIOAPP.Instance.MainWindow).CloseTab(s); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        public void SetKeyDown(PyObject pyKeyDown)
+        {
+            Action<IOTabItem, PyObject> del = (i, p) => { i.SetRichBoxKeyDownEvent(p); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, pyKeyDown);
+        }
+
+        public string GetText()
+        {
+            Func<IOTabItem, string> del = (i) => { return i.GetText(); };
+            return (string)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+
+        public void Clear()
+        {
+            Action<IOTabItem> del = (i) => { i.Clear(); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
         }
 
         public static implicit operator TabItem(IOTabItem item)

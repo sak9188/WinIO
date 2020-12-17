@@ -39,7 +39,10 @@ namespace WinIO.WPF
             var menuitem = (IOMenuItem)sender;
             if (menuitem.PyOnClick != null)
             {
-                menuitem.PyOnClick.Invoke();
+                using(Py.GIL())
+                {
+                    menuitem.PyOnClick.Invoke();
+                }
             }
         }
 
@@ -59,7 +62,7 @@ namespace WinIO.WPF
 
         private IOTabItem CreateInputTextBox(string name)
         {
-            return new IOTabItem(name, "InputTextBox");
+            return new IOTabItem(name, "InputTextBox", false);
         }
 
         public ExportPython.TabItem CreateOutputTab(uint tabPanel, string name)
@@ -68,6 +71,7 @@ namespace WinIO.WPF
             {
                 var panel = tabs[(int)tabPanel];
                 var item = CreateOuputTextBox(name);
+                item.TabPanelID = (int)tabPanel;
                 panel.Items.Add(item);
                 if(panel.Items.Count == 1)
                 {
@@ -84,6 +88,7 @@ namespace WinIO.WPF
             {
                 var panel = tabs[(int)tabPanel];
                 var item = CreateInputTextBox(name);
+                item.TabPanelID = (int)tabPanel;
                 panel.Items.Add(item);
                 if (panel.Items.Count == 1)
                 {
@@ -94,13 +99,10 @@ namespace WinIO.WPF
             return null;
         }
 
-        public void CloseTab(uint tabPanel, TabItem item)
+        public void CloseTab(IOTabItem item)
         {
-            if (tabs.Count > tabPanel)
-            {
-                var tab = tabs[(int)tabPanel];
-                tab.Items.Remove(item);
-            }
+            var tab = tabs[item.TabPanelID];
+            tab.Items.Remove(item);
         }
 
         public void CloseTabPanel(uint tabPanel)
@@ -130,5 +132,7 @@ namespace WinIO.WPF
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);
         }
+
+
     }
 }

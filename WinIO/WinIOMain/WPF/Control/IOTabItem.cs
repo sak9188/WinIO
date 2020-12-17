@@ -17,12 +17,18 @@ namespace WinIO.WPF.Control
         private IORichTextBox richTextbox;
         private Grid grid;
         private WrapPanel wrapPanel;
+        private bool isOutput;
+        private string orignalHeader;
+
+        public int TabPanelID { set; get; }
         // private TextBlock wrapPanelName;
 
         private Dictionary<Button, PyObject> clicks = new Dictionary<Button, PyObject>();
 
-        public IOTabItem(string name, string style)
+        public IOTabItem(string name, string style, bool isOutput = true)
         {
+            this.isOutput = isOutput;
+
             // RICHBOX
             IORichTextBox textBox = new IORichTextBox();
             textBox.Style = (Style)Control.Resources[style];
@@ -49,6 +55,7 @@ namespace WinIO.WPF.Control
             // Tabitem
             this.Content = grid;
             this.Header = name;
+            orignalHeader = name;
         }
 
         public void AddButton(string name, PyObject OnClick)
@@ -68,7 +75,10 @@ namespace WinIO.WPF.Control
             PyObject click = null;
             if (clicks.TryGetValue(bu, out click))
             {
-                click.Invoke();
+                using(Py.GIL())
+                {
+                    click.Invoke();
+                }
             }
         }
 
@@ -139,14 +149,17 @@ namespace WinIO.WPF.Control
         public void AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
             IORichTextBox box = richTextbox;
-            Paragraph p = new Paragraph();
+            Paragraph p = (Paragraph)richTextbox.Document.Blocks.LastBlock;
             Run r = new Run(s);
             if (color != null)
             {
-                var cc = (Color)ColorConverter.ConvertFromString(color);
-                if (cc != null)
+                try
                 {
-                    r.Foreground = new SolidColorBrush(cc);
+                    r.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                }
+                catch (System.FormatException)
+                {
+                    Console.WriteLine("错误的颜色字符串");
                 }
             }
             if (fontsize == 0)
@@ -158,8 +171,32 @@ namespace WinIO.WPF.Control
                 r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
             }
             p.Inlines.Add(r);
-            box.Document.Blocks.Add(p);
+            p.Inlines.Add(new LineBreak());
+            // box.Document.Blocks.Add(p);
             box.MinPageWidth = GetStringActuallyWidth(r);
+        }
+
+        public string GetText()
+        {
+            TextRange textRange = new TextRange(richTextbox.Document.ContentStart, richTextbox.Document.ContentEnd);
+            return textRange.Text;
+        }
+
+        public void Clear()
+        {
+            IORichTextBox box = richTextbox;
+            Paragraph p = (Paragraph)box.Document.Blocks.LastBlock;
+            p.Inlines.Clear();
+        }
+
+        public bool IsCurrent()
+        {
+            return this.IsSelected;
+        }
+
+        public void SetRichBoxKeyDownEvent(PyObject pyKeyDown)
+        {
+            richTextbox.PyKeyDown = pyKeyDown;
         }
     }
 }

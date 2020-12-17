@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Python.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,5 +29,34 @@ namespace WinIO.WPF.Control
             }
         }
 
+        private PyObject pyKeyDown;
+
+        public PyObject PyKeyDown
+        {
+            set
+            {
+                pyKeyDown = value;
+            }
+            get
+            {
+                return pyKeyDown;
+            }
+        }
+
+        public IORichTextBox()
+        {
+            this.KeyDown += RichTextBox_KeyDown;
+        }
+
+        private void RichTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (pyKeyDown != null)
+            {
+                using(Py.GIL())
+                {
+                    pyKeyDown.Invoke(e.Key.ToPython(), e.Key.ToString().ToPython());
+                }
+            }
+        }
     }
 }

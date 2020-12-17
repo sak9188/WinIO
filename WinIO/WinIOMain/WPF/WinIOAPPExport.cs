@@ -21,10 +21,10 @@ namespace WinIO.WPF
             return (ExportPython.TabItem)Instance.Dispatcher.Invoke(del, tabPanel, name);
         }
 
-        public void CreateInputTab(uint tabPanel, string name)
+        public ExportPython.TabItem CreateInputTab(uint tabPanel, string name)
         {
-            Action<uint, string> del = (u, s) => { ((MainWindow)Instance.MainWindow).CreateInputTab(u, s); };
-            Instance.Dispatcher.Invoke(del, tabPanel, name);
+            Func<uint, string, ExportPython.TabItem> del = (u, s) => { return ((MainWindow)Instance.MainWindow).CreateInputTab(u, s); };
+            return (ExportPython.TabItem)Instance.Dispatcher.Invoke(del, tabPanel, name);
         }
 
         public void CloseTabPanel(uint tabPanel)
@@ -32,7 +32,5 @@ namespace WinIO.WPF
             Action<uint> del = (u) => { ((MainWindow)Instance.MainWindow).CloseTabPanel(u); };
             Instance.Dispatcher.Invoke(del, tabPanel);
         }
-
-
     }
 }
