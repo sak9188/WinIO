@@ -63,7 +63,6 @@ namespace WinIO.WPF
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
         }
 
-
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             //可以记录日志并转向错误bug窗口友好提示用户

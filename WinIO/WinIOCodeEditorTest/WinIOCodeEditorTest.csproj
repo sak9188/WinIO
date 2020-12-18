@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>WinIOCodeEditorTest</RootNamespace>
+    <AssemblyName>WinIOCodeEditorTest</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationClientsideProviders" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeEditor\AvalonEditCommands.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\CompletionList.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\CompletionListBox.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\CompletionWindow.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\CompletionWindowBase.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\ICompletionData.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\InsightWindow.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\IOverloadProvider.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\OverloadInsightWindow.cs" />
+    <Compile Include="CodeEditor\CodeCompletion\OverloadViewer.cs" />
+    <Compile Include="CodeEditor\Document\DocumentChangeEventArgs.cs" />
+    <Compile Include="CodeEditor\Document\DocumentChangeOperation.cs" />
+    <Compile Include="CodeEditor\Document\DocumentLine.cs" />
+    <Compile Include="CodeEditor\Document\DocumentLineTree.cs" />
+    <Compile Include="CodeEditor\Document\DocumentTextWriter.cs" />
+    <Compile Include="CodeEditor\Document\GapTextBuffer.cs" />
+    <Compile Include="CodeEditor\Document\IDocument.cs" />
+    <Compile Include="CodeEditor\Document\ILineTracker.cs" />
+    <Compile Include="CodeEditor\Document\ITextAnchor.cs" />
+    <Compile Include="CodeEditor\Document\ITextSource.cs" />
+    <Compile Include="CodeEditor\Document\IUndoableOperation.cs" />
+    <Compile Include="CodeEditor\Document\LineManager.cs" />
+    <Compile Include="CodeEditor\Document\LineNode.cs" />
+    <Compile Include="CodeEditor\Document\NewLineFinder.cs" />
+    <Compile Include="CodeEditor\Document\OffsetChangeMap.cs" />
+    <Compile Include="CodeEditor\Document\RopeTextSource.cs" />
+    <Compile Include="CodeEditor\Document\SimpleSegment.cs" />
+    <Compile Include="CodeEditor\Document\TextAnchor.cs" />
+    <Compile Include="CodeEditor\Document\TextAnchorNode.cs" />
+    <Compile Include="CodeEditor\Document\TextAnchorTree.cs" />
+    <Compile Include="CodeEditor\Document\TextDocument.cs" />
+    <Compile Include="CodeEditor\Document\TextDocumentWeakEventManager.cs" />
+    <Compile Include="CodeEditor\Document\TextLocation.cs" />
+    <Compile Include="CodeEditor\Document\TextSegment.cs" />
+    <Compile Include="CodeEditor\Document\TextSegmentCollection.cs" />
+    <Compile Include="CodeEditor\Document\TextSourceVersionProvider.cs" />
+    <Compile Include="CodeEditor\Document\TextUtilities.cs" />
+    <Compile Include="CodeEditor\Document\UndoOperationGroup.cs" />
+    <Compile Include="CodeEditor\Document\UndoStack.cs" />
+    <Compile Include="CodeEditor\Document\WeakLineTracker.cs" />
+    <Compile Include="CodeEditor\Editing\AbstractMargin.cs" />
+    <Compile Include="CodeEditor\Editing\Caret.cs" />
+    <Compile Include="CodeEditor\Editing\CaretLayer.cs" />
+    <Compile Include="CodeEditor\Editing\CaretNavigationCommandHandler.cs" />
+    <Compile Include="CodeEditor\Editing\CaretWeakEventHandler.cs" />
+    <Compile Include="CodeEditor\Editing\DottedLineMargin.cs" />
+    <Compile Include="CodeEditor\Editing\DragDropException.cs" />
+    <Compile Include="CodeEditor\Editing\EditingCommandHandler.cs" />
+    <Compile Include="CodeEditor\Editing\EmptySelection.cs" />
+    <Compile Include="CodeEditor\Editing\ImeNativeWrapper.cs" />
+    <Compile Include="CodeEditor\Editing\ImeSupport.cs" />
+    <Compile Include="CodeEditor\Editing\IReadOnlySectionProvider.cs" />
+    <Compile Include="CodeEditor\Editing\LineNumberMargin.cs" />
+    <Compile Include="CodeEditor\Editing\MouseSelectionMode.cs" />
+    <Compile Include="CodeEditor\Editing\NoReadOnlySections.cs" />
+    <Compile Include="CodeEditor\Editing\RectangleSelection.cs" />
+    <Compile Include="CodeEditor\Editing\Selection.cs" />
+    <Compile Include="CodeEditor\Editing\SelectionColorizer.cs" />
+    <Compile Include="CodeEditor\Editing\SelectionLayer.cs" />
+    <Compile Include="CodeEditor\Editing\SelectionMouseHandler.cs" />
+    <Compile Include="CodeEditor\Editing\SelectionSegment.cs" />
+    <Compile Include="CodeEditor\Editing\SimpleSelection.cs" />
+    <Compile Include="CodeEditor\Editing\TextArea.cs" />
+    <Compile Include="CodeEditor\Editing\TextAreaAutomationPeer.cs" />
+    <Compile Include="CodeEditor\Editing\TextAreaDefaultInputHandlers.cs" />
+    <Compile Include="CodeEditor\Editing\TextAreaInputHandler.cs" />
+    <Compile Include="CodeEditor\Editing\TextRangeProvider.cs" />
+    <Compile Include="CodeEditor\Editing\TextSegmentReadOnlySectionProvider.cs" />
+    <Compile Include="CodeEditor\Folding\FoldingElementGenerator.cs" />
+    <Compile Include="CodeEditor\Folding\FoldingManager.cs" />
+    <Compile Include="CodeEditor\Folding\FoldingMargin.cs" />
+    <Compile Include="CodeEditor\Folding\FoldingMarginMarker.cs" />
+    <Compile Include="CodeEditor\Folding\FoldingSection.cs" />
+    <Compile Include="CodeEditor\Folding\NewFolding.cs" />
+    <Compile Include="CodeEditor\Folding\XmlFoldingStrategy.cs" />
+    <Compile Include="CodeEditor\Highlighting\DocumentHighlighter.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightedInlineBuilder.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightedLine.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightedSection.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingBrush.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingColor.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingColorizer.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingDefinitionInvalidException.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingDefinitionTypeConverter.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingEngine.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingManager.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingRule.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingRuleSet.cs" />
+    <Compile Include="CodeEditor\Highlighting\HighlightingSpan.cs" />
+    <Compile Include="CodeEditor\Highlighting\HtmlClipboard.cs" />
+    <Compile Include="CodeEditor\Highlighting\HtmlOptions.cs" />
+    <Compile Include="CodeEditor\Highlighting\HtmlRichTextWriter.cs" />
+    <Compile Include="CodeEditor\Highlighting\IHighlighter.cs" />
+    <Compile Include="CodeEditor\Highlighting\IHighlightingDefinition.cs" />
+    <Compile Include="CodeEditor\Highlighting\IHighlightingDefinitionReferenceResolver.cs" />
+    <Compile Include="CodeEditor\Highlighting\Resources\Resources.cs" />
+    <Compile Include="CodeEditor\Highlighting\RichText.cs" />
+    <Compile Include="CodeEditor\Highlighting\RichTextColorizer.cs" />
+    <Compile Include="CodeEditor\Highlighting\RichTextModel.cs" />
+    <Compile Include="CodeEditor\Highlighting\RichTextModelWriter.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\HighlightingLoader.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\IXshdVisitor.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\SaveXshdVisitor.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\V1Loader.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\V2Loader.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XmlHighlightingDefinition.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdColor.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdElement.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdImport.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdKeywords.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdProperty.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdReference.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdRule.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdRuleSet.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdSpan.cs" />
+    <Compile Include="CodeEditor\Highlighting\Xshd\XshdSyntaxDefinition.cs" />
+    <Compile Include="CodeEditor\Indentation\CSharp\CSharpIndentationStrategy.cs" />
+    <Compile Include="CodeEditor\Indentation\CSharp\DocumentAccessor.cs" />
+    <Compile Include="CodeEditor\Indentation\CSharp\IndentationReformatter.cs" />
+    <Compile Include="CodeEditor\Indentation\DefaultIndentationStrategy.cs" />
+    <Compile Include="CodeEditor\Indentation\IIndentationStrategy.cs" />
+    <Compile Include="CodeEditor\Properties\AssemblyInfo.cs" />
+    <Compile Include="CodeEditor\Rendering\BackgroundGeometryBuilder.cs" />
+    <Compile Include="CodeEditor\Rendering\CollapsedLineSection.cs" />
+    <Compile Include="CodeEditor\Rendering\ColorizingTransformer.cs" />
+    <Compile Include="CodeEditor\Rendering\ColumnRulerRenderer.cs" />
+    <Compile Include="CodeEditor\Rendering\CurrentLineHighlightRenderer.cs" />
+    <Compile Include="CodeEditor\Rendering\DefaultTextRunTypographyProperties.cs" />
+    <Compile Include="CodeEditor\Rendering\DocumentColorizingTransformer.cs" />
+    <Compile Include="CodeEditor\Rendering\FormattedTextElement.cs" />
+    <Compile Include="CodeEditor\Rendering\GlobalTextRunProperties.cs" />
+    <Compile Include="CodeEditor\Rendering\HeightTree.cs" />
+    <Compile Include="CodeEditor\Rendering\HeightTreeLineNode.cs" />
+    <Compile Include="CodeEditor\Rendering\HeightTreeNode.cs" />
+    <Compile Include="CodeEditor\Rendering\IBackgroundRenderer.cs" />
+    <Compile Include="CodeEditor\Rendering\InlineObjectRun.cs" />
+    <Compile Include="CodeEditor\Rendering\ITextRunConstructionContext.cs" />
+    <Compile Include="CodeEditor\Rendering\ITextViewConnect.cs" />
+    <Compile Include="CodeEditor\Rendering\IVisualLineTransformer.cs" />
+    <Compile Include="CodeEditor\Rendering\Layer.cs" />
+    <Compile Include="CodeEditor\Rendering\LayerPosition.cs" />
+    <Compile Include="CodeEditor\Rendering\LinkElementGenerator.cs" />
+    <Compile Include="CodeEditor\Rendering\MouseHoverLogic.cs" />
+    <Compile Include="CodeEditor\Rendering\SimpleTextSource.cs" />
+    <Compile Include="CodeEditor\Rendering\SingleCharacterElementGenerator.cs" />
+    <Compile Include="CodeEditor\Rendering\TextLayer.cs" />
+    <Compile Include="CodeEditor\Rendering\TextView.cs" />
+    <Compile Include="CodeEditor\Rendering\TextViewCachedElements.cs" />
+    <Compile Include="CodeEditor\Rendering\TextViewWeakEventManager.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLine.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineConstructionStartEventArgs.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineElement.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineElementGenerator.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineElementTextRunProperties.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineLinkText.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLinesInvalidException.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineText.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineTextParagraphProperties.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualLineTextSource.cs" />
+    <Compile Include="CodeEditor\Rendering\VisualYPosition.cs" />
+    <Compile Include="CodeEditor\Search\DropDownButton.cs" />
+    <Compile Include="CodeEditor\Search\ISearchStrategy.cs" />
+    <Compile Include="CodeEditor\Search\Localization.cs" />
+    <Compile Include="CodeEditor\Search\RegexSearchStrategy.cs" />
+    <Compile Include="CodeEditor\Search\SearchCommands.cs" />
+    <Compile Include="CodeEditor\Search\SearchPanel.cs" />
+    <Compile Include="CodeEditor\Search\SearchResultBackgroundRenderer.cs" />
+    <Compile Include="CodeEditor\Search\SearchStrategyFactory.cs" />
+    <Compile Include="CodeEditor\Snippets\IActiveElement.cs" />
+    <Compile Include="CodeEditor\Snippets\InsertionContext.cs" />
+    <Compile Include="CodeEditor\Snippets\Snippet.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetAnchorElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetBoundElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetCaretElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetContainerElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetEventArgs.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetInputHandler.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetReplaceableTextElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetSelectionElement.cs" />
+    <Compile Include="CodeEditor\Snippets\SnippetTextElement.cs" />
+    <Compile Include="CodeEditor\TextEditor.cs" />
+    <Compile Include="CodeEditor\TextEditorAutomationPeer.cs" />
+    <Compile Include="CodeEditor\TextEditorComponent.cs" />
+    <Compile Include="CodeEditor\TextEditorOptions.cs" />
+    <Compile Include="CodeEditor\TextEditorWeakEventManager.cs" />
+    <Compile Include="CodeEditor\TextViewPosition.cs" />
+    <Compile Include="CodeEditor\Utils\Boxes.cs" />
+    <Compile Include="CodeEditor\Utils\CallbackOnDispose.cs" />
+    <Compile Include="CodeEditor\Utils\CharRope.cs" />
+    <Compile Include="CodeEditor\Utils\CompressingTreeList.cs" />
+    <Compile Include="CodeEditor\Utils\Constants.cs" />
+    <Compile Include="CodeEditor\Utils\DelayedEvents.cs" />
+    <Compile Include="CodeEditor\Utils\Deque.cs" />
+    <Compile Include="CodeEditor\Utils\DocumentPrinter.cs" />
+    <Compile Include="CodeEditor\Utils\Empty.cs" />
+    <Compile Include="CodeEditor\Utils\ExtensionMethods.cs" />
+    <Compile Include="CodeEditor\Utils\FileReader.cs" />
+    <Compile Include="CodeEditor\Utils\IFreezable.cs" />
+    <Compile Include="CodeEditor\Utils\ImmutableStack.cs" />
+    <Compile Include="CodeEditor\Utils\NullSafeCollection.cs" />
+    <Compile Include="CodeEditor\Utils\ObserveAddRemoveCollection.cs" />
+    <Compile Include="CodeEditor\Utils\PixelSnapHelpers.cs" />
+    <Compile Include="CodeEditor\Utils\PlainRichTextWriter.cs" />
+    <Compile Include="CodeEditor\Utils\PropertyChangedWeakEventManager.cs" />
+    <Compile Include="CodeEditor\Utils\RichTextWriter.cs" />
+    <Compile Include="CodeEditor\Utils\Rope.cs" />
+    <Compile Include="CodeEditor\Utils\RopeNode.cs" />
+    <Compile Include="CodeEditor\Utils\RopeTextReader.cs" />
+    <Compile Include="CodeEditor\Utils\StringSegment.cs" />
+    <Compile Include="CodeEditor\Utils\TextFormatterFactory.cs" />
+    <Compile Include="CodeEditor\Utils\ThrowUtil.cs" />
+    <Compile Include="CodeEditor\Utils\WeakEventManagerBase.cs" />
+    <Compile Include="CodeEditor\Utils\Win32.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\ASPX.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Boo.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Coco-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\CPP-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\CSharp-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\CSS-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\HTML-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Java-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Json.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\MarkDown-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\MarkDownWithFontSize-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\ModeV1.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\ModeV2.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Patch-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\PHP-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\PowerShell.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Python-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\Tex-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\TSQL-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\VB-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\XML-Mode.xshd" />
+    <EmbeddedResource Include="CodeEditor\Highlighting\Resources\XmlDoc.xshd" />
+    <None Include="CodeEditor\ICSharpCode.AvalonEdit.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="CodeEditor\CodeCompletion\CompletionList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CodeEditor\CodeCompletion\InsightWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CodeEditor\Search\DropDownButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CodeEditor\Search\SearchPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CodeEditor\TextEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CodeEditor\themes\generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodeEditor\ICSharpCode.AvalonEdit.xml" />
+    <Content Include="CodeEditor\Properties\CodeAnalysisDictionary.xml" />
+    <Content Include="CodeEditor\Search\next.png" />
+    <Content Include="CodeEditor\Search\prev.png" />
+    <Content Include="CodeEditor\themes\RightArrow.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

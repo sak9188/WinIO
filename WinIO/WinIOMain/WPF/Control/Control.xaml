@@ -1,8 +1,8 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:WinIO.WPF.Control">
-
+    xmlns:local="clr-namespace:WinIO.WPF.Control"
+    xmlns:AvalonEdit="clr-namespace:ICSharpCode.AvalonEdit">
+    
     <Style TargetType="{x:Type local:IOTabItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -19,7 +19,7 @@
                             <ContentPresenter ContentSource="Header" Margin="10,5"
                                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                      TextBlock.Foreground="{DynamicResource SystemBaseMediumHighColorBrush}"/>
+                                                      TextBlock.Foreground="White"/>
 
 
                         </Grid>
@@ -46,7 +46,7 @@
     <Style x:Key="OutputTextBox" TargetType="RichTextBox">
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="IsReadOnly" Value="True"/>
-        <Setter Property="Foreground" Value="{DynamicResource SystemBaseMediumHighColorBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="Background" Value="#90000000"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="BorderThickness" Value="0" />
@@ -55,8 +55,10 @@
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
     </Style>
 
-    <Style x:Key="InputTextBox" TargetType="RichTextBox">
-        <Setter Property="AcceptsReturn" Value="True"/>
+    <Style x:Key="InputTextBox" TargetType="{x:Type AvalonEdit:TextEditor}">
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="ShowLineNumbers" Value="True"/>
+        <Setter Property="SyntaxHighlighting" Value="Python" />
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
@@ -68,7 +70,7 @@
     </Style>
 
     <Style x:Key="TabPanelTextBlock" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource SystemBaseMediumHighColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SystemChromeWhiteColorBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="8"/>
     </Style>
@@ -79,5 +81,5 @@
         <Setter Property="MinHeight" Value="23"/>
         <Setter Property="Padding" Value="7,3"/>
     </Style>
-  
+
 </ResourceDictionary>

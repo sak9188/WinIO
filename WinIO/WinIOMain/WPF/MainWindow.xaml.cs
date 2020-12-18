@@ -125,9 +125,18 @@ namespace WinIO.WPF
             Init();
         }
 
+        private ResourceDictionary GetResourceDictionaryByURI(string suri)
+        {
+            Uri uri = new Uri(suri);
+            ResourceDictionary rd = new ResourceDictionary();
+            rd.Source = uri;
+            return rd;
+        }
+
         private void Init()
         {
             InitializeComponent();
+
             tabs.Add(TabControl0);
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);

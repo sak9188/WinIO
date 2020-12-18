@@ -4,18 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
-        xmlns:ikriv="clr-namespace:IKriv.Wpf"
+        xmlns:AvalonEdit="clr-namespace:ICSharpCode.AvalonEdit"
+        xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing"
         mc:Ignorable="d"
-        fw:AcrylicWindow.Enabled="True"
+        fw:AcrylicWindow.Enabled="False"
         Title="WinIO" Height="597.576" Width="873.476" TintOpacity="0.90"
         BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/search/searchpanel.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/search/dropdownbutton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/codecompletion/insightwindow.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/codecompletion/completionlist.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml"/>
                 <ResourceDictionary Source="control\Control.Menu.xaml"/>
                 <ResourceDictionary Source="control\Control.xaml"/>
                 <ResourceDictionary Source="Main.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -38,34 +43,10 @@
         </Menu>
         <TabControl Background="Transparent" Grid.Row="1" x:Name="TabControl0"
                     Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    SelectionChanged="TabControl_SelectionChanged">
-            <!--<TabItem>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <WrapPanel Grid.Row="0">
-                        <TextBlock Foreground="{DynamicResource SystemBaseMediumHighColorBrush}" 
-                                   VerticalAlignment="Center"
-                                   Margin="8">
-                            WinIO-工具条</TextBlock>
-                        <Button Margin="3" MinWidth="70">123</Button>
-                        <Button Margin="3" MinWidth="70">123</Button>
-                        <Button Margin="3" MinWidth="70">123</Button>
-                    </WrapPanel>
-                    <RichTextBox Grid.Row="1">
-                        <FlowDocument>
-                            <Paragraph>
-                                <Run>123</Run>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
-                </Grid>
-            </TabItem>-->
+                    >
         </TabControl>
-        
-        
+
+
         <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
         <TabControl Background="Transparent" Grid.Row="1" Grid.Column="2" Name="TabControl1"

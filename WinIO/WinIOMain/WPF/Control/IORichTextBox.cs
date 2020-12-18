@@ -49,7 +49,7 @@ namespace WinIO.WPF.Control
         }
 
         private void RichTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
+        {          
             if (pyKeyDown != null)
             {
                 using(Py.GIL())

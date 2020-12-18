@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIO", "WinIO\WinIO.WPF.csproj", "{55A505FD-30FE-4F4D-A14D-B0BFEA3F64DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIOMain", "WinIOMain\WinIO.csproj", "{42EC411A-C585-4944-B4F2-400468F66033}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIO", "WinIOMain\WinIO.csproj", "{42EC411A-C585-4944-B4F2-400468F66033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinIOCodeEditorTest", "WinIOCodeEditorTest\WinIOCodeEditorTest.csproj", "{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{42EC411A-C585-4944-B4F2-400468F66033}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42EC411A-C585-4944-B4F2-400468F66033}.Release|x64.ActiveCfg = Release|x64
 		{42EC411A-C585-4944-B4F2-400468F66033}.Release|x64.Build.0 = Release|x64
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Debug|x64.Build.0 = Debug|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Release|x64.ActiveCfg = Release|Any CPU
+		{B4F47B7F-7495-4CAB-A9D5-69CE60DF1F60}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
