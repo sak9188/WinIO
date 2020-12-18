@@ -46,7 +46,7 @@ namespace WinIO.WPF
             }
         }
 
-        public MenuItem CreateMenuItem(string header)
+        public IOMenuItem CreateMenuItem(string header)
         {
             IOMenuItem item = new IOMenuItem();
             item.Header = header;
@@ -133,6 +133,11 @@ namespace WinIO.WPF
             tabs.Add(TabControl2);
         }
 
-
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabControl tab = (TabControl)sender;
+            var item = (IOTabItem)tab.Items[tab.SelectedIndex];
+            item.Selected();
+        }
     }
 }

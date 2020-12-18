@@ -37,7 +37,8 @@
               Background="Transparent" FontSize="13" Foreground="{DynamicResource SystemBaseMediumHighColorBrush}">
         </Menu>
         <TabControl Background="Transparent" Grid.Row="1" x:Name="TabControl0"
-                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}">
+                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
+                    SelectionChanged="TabControl_SelectionChanged">
             <!--<TabItem>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -69,7 +70,7 @@
 
         <TabControl Background="Transparent" Grid.Row="1" Grid.Column="2" Name="TabControl1"
                     Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    >
+                    SelectionChanged="TabControl_SelectionChanged">
         </TabControl>
         <TextBlock Grid.Row="1" Grid.Column="2" FontSize="55" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" TextWrapping="Wrap" Text="Center" >
@@ -90,10 +91,10 @@
         <GridSplitter Grid.Row="1" x:Name="Splitter1" Grid.Column="3" Width="5" HorizontalAlignment="Stretch" />
         <TabControl Background="Transparent" Grid.Row="1" Grid.Column="4" Name="TabControl2"
                     Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    >
+                    SelectionChanged="TabControl_SelectionChanged">
         </TabControl>
         <TextBlock Grid.Row="1" Grid.Column="4" FontSize="55" HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" TextWrapping="Wrap" Text="Right side">
+                   VerticalAlignment="Center" TextWrapping="Wrap" Text="Right side" >
             <TextBlock.Style>
                 <Style TargetType="TextBlock">
                     <Style.Triggers>

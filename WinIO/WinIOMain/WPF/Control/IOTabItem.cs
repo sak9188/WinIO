@@ -21,6 +21,9 @@ namespace WinIO.WPF.Control
         private string orignalHeader;
 
         public int TabPanelID { set; get; }
+
+        public PyObject PyOnSelected { set; get; }
+
         // private TextBlock wrapPanelName;
 
         private Dictionary<Button, PyObject> clicks = new Dictionary<Button, PyObject>();
@@ -197,6 +200,17 @@ namespace WinIO.WPF.Control
         public void SetRichBoxKeyDownEvent(PyObject pyKeyDown)
         {
             richTextbox.PyKeyDown = pyKeyDown;
+        }
+
+        public void Selected()
+        {
+            if(PyOnSelected != null)
+            {
+                using(Py.GIL())
+                {
+                    PyOnSelected.Invoke();
+                }
+            }
         }
     }
 }

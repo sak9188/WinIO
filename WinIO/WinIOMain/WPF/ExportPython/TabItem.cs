@@ -54,7 +54,7 @@ namespace WinIO.WPF.ExportPython
             }
         }
 
-        public string header;
+        private string header;
 
         public string Header
         {
@@ -68,6 +68,22 @@ namespace WinIO.WPF.ExportPython
                 return header;
             }
         }
+
+        private PyObject onSelcted;
+
+        public PyObject OnSelcted
+        {
+            set
+            {
+                onSelcted = value;
+                SetOnSelected(value);
+            }
+            get
+            {
+                return onSelcted;
+            }
+        }
+
 
 
         #region 隐藏设置方法
@@ -87,6 +103,12 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOTabItem, string> del = (i, s) => { i.Header = s; };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, str);
+        }
+
+        private void SetOnSelected(PyObject onSlected)
+        {
+            Action<IOTabItem, PyObject> del = (i, o) => { i.PyOnSelected = o; };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, onSlected);
         }
         #endregion
 

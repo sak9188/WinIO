@@ -10,6 +10,21 @@ namespace WinIO.WPF
 {
     public partial class WinIOAPP : Application
     {
+        public static void CustomInit()
+        {
+            Action del = () =>
+            {
+                var window = ((MainWindow)Instance.MainWindow);
+                var s_version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                var version = window.CreateTopMenuItem("当前版本："+ s_version);
+                var change_1 = window.CreateMenuItem("取消：alt键多选的功能");
+                var plan_1 = window.CreateMenuItem("计划：尝试加入拖拽功能");
+                version.AddMenuItem(change_1);
+                version.AddMenuItem(plan_1);
+            };
+            Instance.Dispatcher.Invoke(del);
+        }
+
         public ExportPython.MenuItem CreateMenuItem(string header, bool toplevel=false)
         {
             return new ExportPython.MenuItem(header, toplevel);

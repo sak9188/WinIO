@@ -45,6 +45,9 @@ namespace WinIO.IOConsole
             try
             {
                 dynamic io = Py.Import("WinIOStart");
+                var state = PythonEngine.BeginAllowThreads();
+                WinIOAPP.CustomInit();
+                PythonEngine.EndAllowThreads(state);
             }
             catch (Exception e)
             {
@@ -54,7 +57,6 @@ namespace WinIO.IOConsole
             {
                 if(!WinIOAPP.WindowThread.IsAlive)
                 {
-
                     WinIOAPP.WindowThread.Abort();
                     break;
                 }

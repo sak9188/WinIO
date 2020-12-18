@@ -44,6 +44,8 @@ namespace WinIO.WPF
             System.Windows.Threading.Dispatcher.Run();
         }
 
+
+
         public static void RunWindow()
         {
             WindowThread = new Thread(new ThreadStart(LoadMainWindow));
