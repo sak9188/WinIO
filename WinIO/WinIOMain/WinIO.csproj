@@ -346,6 +346,7 @@
     <Compile Include="WPF\Control\Control.cs" />
     <Compile Include="WPF\Control\IOMenuItem.cs" />
     <Compile Include="WPF\Control\IORichTextBox.cs" />
+    <Compile Include="WPF\Control\IOTabControl.cs" />
     <Compile Include="WPF\Control\IOTabItem.cs" />
     <Compile Include="WPF\Converter\MathConverter.cs" />
     <Compile Include="WPF\ExportPython\MenuItem.cs" />

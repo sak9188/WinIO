@@ -12,14 +12,14 @@
                             <Grid>
                                 <Border x:Name="border" 
                                             CornerRadius="3,3,0,0"
-                                            Margin="1"                                            
+                                            Margin="1"              
                                             Background="{DynamicResource SystemBaseLowColorBrush}"
                                             BorderThickness="0"/>
                             </Grid>
                             <ContentPresenter ContentSource="Header" Margin="10,5"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                      TextBlock.Foreground="White"/>
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                            TextBlock.Foreground="White"/>
 
 
                         </Grid>

@@ -35,11 +35,11 @@ namespace WinIO.WPF
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            
+
             var menuitem = (IOMenuItem)sender;
             if (menuitem.PyOnClick != null)
             {
-                using(Py.GIL())
+                using (Py.GIL())
                 {
                     menuitem.PyOnClick.Invoke();
                 }
@@ -73,7 +73,7 @@ namespace WinIO.WPF
                 var item = CreateOuputTextBox(name);
                 item.TabPanelID = (int)tabPanel;
                 panel.Items.Add(item);
-                if(panel.Items.Count == 1)
+                if (panel.Items.Count == 1)
                 {
                     panel.SelectedIndex = 0;
                 }
@@ -125,14 +125,6 @@ namespace WinIO.WPF
             Init();
         }
 
-        private ResourceDictionary GetResourceDictionaryByURI(string suri)
-        {
-            Uri uri = new Uri(suri);
-            ResourceDictionary rd = new ResourceDictionary();
-            rd.Source = uri;
-            return rd;
-        }
-
         private void Init()
         {
             InitializeComponent();
@@ -142,11 +134,15 @@ namespace WinIO.WPF
             tabs.Add(TabControl2);
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void SetWindowsSize(double height, double width)
         {
-            TabControl tab = (TabControl)sender;
-            var item = (IOTabItem)tab.Items[tab.SelectedIndex];
-            item.Selected();
+            this.Height = height;
+            this.Width = width;
+        }
+
+        public Tuple<double, double> GetWindowSize()
+        {
+            return new Tuple<double, double>(this.Height, this.Width);
         }
     }
 }

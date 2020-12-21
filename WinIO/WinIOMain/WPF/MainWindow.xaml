@@ -6,6 +6,7 @@
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
         xmlns:AvalonEdit="clr-namespace:ICSharpCode.AvalonEdit"
         xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing"
+        xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="False"
         Title="WinIO" Height="597.576" Width="873.476" TintOpacity="0.90"
@@ -37,18 +38,11 @@
         <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
               Background="Transparent" FontSize="13" Foreground="{DynamicResource SystemBaseMediumHighColorBrush}">
         </Menu>
-        <TabControl Background="Transparent" Grid.Row="1" x:Name="TabControl0"
-                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    >
-        </TabControl>
-
+        <local:IOTabControl Grid.Row="1" x:Name="TabControl0" IsHitTestVisible="True"/>
 
         <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
-        <TabControl Background="Transparent" Grid.Row="1" Grid.Column="2" Name="TabControl1"
-                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    SelectionChanged="TabControl_SelectionChanged">
-        </TabControl>
+        <local:IOTabControl Grid.Row="1" Grid.Column="2" x:Name="TabControl1"/>
         <TextBlock Grid.Row="1" Grid.Column="2" FontSize="55" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" TextWrapping="Wrap" Text="Center" >
             <TextBlock.Style>
@@ -66,10 +60,7 @@
         </TextBlock>
 
         <GridSplitter Grid.Row="1" x:Name="Splitter1" Grid.Column="3" Width="5" HorizontalAlignment="Stretch" />
-        <TabControl Background="Transparent" Grid.Row="1" Grid.Column="4" Name="TabControl2"
-                    Margin="1" BorderThickness="0" Height="{Binding ElementName=Splitter0, Path=ActualHeight}"
-                    SelectionChanged="TabControl_SelectionChanged">
-        </TabControl>
+        <local:IOTabControl Grid.Row="1" Grid.Column="4" x:Name="TabControl2"/>
         <TextBlock Grid.Row="1" Grid.Column="4" FontSize="55" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" TextWrapping="Wrap" Text="Right side" >
             <TextBlock.Style>

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace WinIO.WPF.Control
@@ -68,6 +69,7 @@ namespace WinIO.WPF.Control
                 temp.EnableHyperlinks = false;
                 textEditor.Options = temp;
                 textEditor.KeyDown += TextEditor_KeyDown;
+                textEditor.DragOver += TextEditor_DragOver;
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
                 Grid.SetRow(textEditor, 1);
@@ -83,6 +85,11 @@ namespace WinIO.WPF.Control
             this.Content = grid;
             this.Header = name;
             orignalHeader = name;
+        }
+
+        private void TextEditor_DragOver(object sender, DragEventArgs e)
+        {
+            e.Handled = true;
         }
 
         private void TextEditor_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -200,11 +207,14 @@ namespace WinIO.WPF.Control
             }
 
             richTextbox.MinPageWidth = sum + 10;
+
+            // 无论输出端干了啥，必须得滚到最下面
+            richTextbox.ScrollToEnd();
         }
 
         public void AppendInputString(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
-            this.textEditor.AppendText(s);
+            this.textEditor.Text = s;
         }
 
         public void AppendString(string s, string color = null, string fonfamily = null, double fontsize = 0)
@@ -227,32 +237,38 @@ namespace WinIO.WPF.Control
 
         public void AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
-            IORichTextBox box = richTextbox;
-            Paragraph p = (Paragraph)richTextbox.Document.Blocks.LastBlock;
-            Run r = new Run(s);
-            if (color != null)
+            if (this.isOutput)
             {
-                try
+                IORichTextBox box = richTextbox;
+                Paragraph p = (Paragraph)richTextbox.Document.Blocks.LastBlock;
+                Run r = new Run(s);
+                if (color != null)
                 {
-                    r.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                    try
+                    {
+                        r.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                    }
+                    catch (System.FormatException)
+                    {
+                        Console.WriteLine("错误的颜色字符串");
+                    }
                 }
-                catch (System.FormatException)
+                if (fontsize == 0)
                 {
-                    Console.WriteLine("错误的颜色字符串");
+                    fontsize = box.FontSize;
                 }
+                if (fonfamily != null)
+                {
+                    r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
+                }
+                p.Inlines.Add(r);
+                p.Inlines.Add(new LineBreak());
+                // box.Document.Blocks.Add(p);
+                box.MinPageWidth = GetStringActuallyWidth(r);
+
+                // 无论输出端干了啥，必须得滚到最下面
+                richTextbox.ScrollToEnd();
             }
-            if (fontsize == 0)
-            {
-                fontsize = box.FontSize;
-            }
-            if (fonfamily != null)
-            {
-                r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
-            }
-            p.Inlines.Add(r);
-            p.Inlines.Add(new LineBreak());
-            // box.Document.Blocks.Add(p);
-            box.MinPageWidth = GetStringActuallyWidth(r);
         }
 
         public string GetText()
@@ -314,6 +330,41 @@ namespace WinIO.WPF.Control
                 var typeConverter = new HighlightingDefinitionTypeConverter();
                 textEditor.SyntaxHighlighting = (IHighlightingDefinition)typeConverter.ConvertFrom(format);
             }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if(e.Source == this)
+            {
+                base.OnMouseMove(e);
+
+                // 判断左键是否按下
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    //声明DataObject,并打包圆控件的图像绘制方式(包含颜色)、高度及其副本。
+                    DataObject data = new DataObject();
+                    data.SetData(this.GetType().Name, this);
+
+                    //使用DragDrop的DoDragDrop方法开启拖动功能。拖动方式为拖动复制或移动
+                    DragDrop.DoDragDrop(this, data, DragDropEffects.Move);
+                }
+            }
+        }
+
+        protected override void OnGiveFeedback(GiveFeedbackEventArgs e)
+        {
+            base.OnGiveFeedback(e);
+
+            //Effects获取拖动类型
+            if (e.Effects.HasFlag(DragDropEffects.Move))
+            {
+                Mouse.SetCursor(Cursors.Hand);
+            }
+            else
+            {
+                Mouse.SetCursor(Cursors.No);
+            }
+            e.Handled = true;
         }
     }
 }

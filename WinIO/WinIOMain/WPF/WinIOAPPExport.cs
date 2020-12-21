@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Python.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,15 +18,25 @@ namespace WinIO.WPF
                 var window = ((MainWindow)Instance.MainWindow);
                 var s_version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 var version = window.CreateTopMenuItem("当前版本："+ s_version);
-                var change_1 = window.CreateMenuItem("取消：alt键多选的功能");
-                var plan_1 = window.CreateMenuItem("计划：尝试加入拖拽功能");
-                var plan_2 = window.CreateMenuItem("加入: Lua语法高亮");
-                var plan_3 = window.CreateMenuItem("计划：加入自定义配置功能");
-                version.AddMenuItem(change_1);
-                version.AddMenuItem(plan_1);
-                version.AddMenuItem(plan_2);
-                version.AddMenuItem(plan_3);
+                version.AddMenuItem(window.CreateMenuItem("加入: Lua语法高亮"));
+                version.AddMenuItem(window.CreateMenuItem("加入: 可交互IO"));
+                version.AddMenuItem(window.CreateMenuItem("加入：拖拽功能"));
+                version.AddMenuItem(window.CreateMenuItem("取消：alt键多选的功能"));
+                version.AddMenuItem(window.CreateMenuItem("计划：加入自定义配置功能"));
+                version.AddMenuItem(window.CreateMenuItem("计划：加入QDir布局"));
             };
+            Instance.Dispatcher.Invoke(del);
+        }
+
+        public Tuple<double, double> GetWindowSize()
+        {
+            Func<Tuple<double, double>> del = () => { return ((MainWindow)Instance.MainWindow).GetWindowSize(); };
+            return Instance.Dispatcher.Invoke(del);
+        }
+
+        public void SetWindowSize(double hight, double width)
+        {
+            Action<double, double> del = (h, w) => { ((MainWindow)Instance.MainWindow).SetWindowsSize(h, w); };
             Instance.Dispatcher.Invoke(del);
         }
 
