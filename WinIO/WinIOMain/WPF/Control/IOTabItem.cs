@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
 using Python.Runtime;
 using System;
 using System.Collections.Generic;
@@ -59,12 +60,13 @@ namespace WinIO.WPF.Control
             else
             {
                 TextEditor textEditor = new TextEditor();
-                var sty = (Style)Control.Resources[style];
-                if(!sty.IsSealed)
-                {
-                    sty.BasedOn = textEditor.Style;
-                }
-                textEditor.Style = sty;
+                textEditor.Style = (Style)Control.Resources[style];
+                var temp = new TextEditorOptions();
+                temp.ShowSpaces = true;
+                temp.ShowTabs = true;
+                temp.EnableEmailHyperlinks = false;
+                temp.EnableHyperlinks = false;
+                textEditor.Options = temp;
                 textEditor.KeyDown += TextEditor_KeyDown;
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
@@ -302,6 +304,15 @@ namespace WinIO.WPF.Control
                 {
                     PyOnSelected.Invoke();
                 }
+            }
+        }
+
+        public void SetSyntaxHighlighting(string format)
+        {
+            if(textEditor != null)
+            {
+                var typeConverter = new HighlightingDefinitionTypeConverter();
+                textEditor.SyntaxHighlighting = (IHighlightingDefinition)typeConverter.ConvertFrom(format);
             }
         }
     }

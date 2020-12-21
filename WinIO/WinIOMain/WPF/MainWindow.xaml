@@ -13,10 +13,6 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/search/searchpanel.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/search/dropdownbutton.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/codecompletion/insightwindow.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/wpf/codeeditor/codecompletion/completionlist.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml"/>
                 <ResourceDictionary Source="control\Control.Menu.xaml"/>
                 <ResourceDictionary Source="control\Control.xaml"/>

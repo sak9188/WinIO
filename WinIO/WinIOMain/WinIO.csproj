@@ -408,6 +408,7 @@
     <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\VB-Mode.xshd" />
     <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\XML-Mode.xshd" />
     <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\XmlDoc.xshd" />
+    <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\Lua-Mode.xshd" />
     <None Include="WPF\WinIOAPP.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -434,7 +435,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WPF\CodeEditor\themes\generic.xaml">
+    <Page Include="themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -461,7 +462,7 @@
     <Content Include="WPF\CodeEditor\Properties\CodeAnalysisDictionary.xml" />
     <Content Include="WPF\CodeEditor\Search\next.png" />
     <Content Include="WPF\CodeEditor\Search\prev.png" />
-    <Content Include="WPF\CodeEditor\themes\RightArrow.cur" />
+    <Content Include="themes\RightArrow.cur" />
   </ItemGroup>
   <Target Name="ILMerge">
     <Exec Command="$(ILMergeConsolePath) Bin\x64\Release\WinIOMain.exe ^&#xD;&#xA;    /out:WinIOMainPacked.exe ^&#xD;&#xA;    Bin\x64\Release\Python.Runtime.dll ^&#xD;&#xA;    Bin\x64\Release\FluentWPF.dll " />

@@ -58,7 +58,6 @@
     <Style x:Key="InputTextBox" TargetType="{x:Type AvalonEdit:TextEditor}">
         <Setter Property="FontFamily" Value="Consolas" />
         <Setter Property="ShowLineNumbers" Value="True"/>
-        <Setter Property="SyntaxHighlighting" Value="Python" />
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />

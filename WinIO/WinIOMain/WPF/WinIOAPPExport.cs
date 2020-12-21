@@ -19,8 +19,12 @@ namespace WinIO.WPF
                 var version = window.CreateTopMenuItem("当前版本："+ s_version);
                 var change_1 = window.CreateMenuItem("取消：alt键多选的功能");
                 var plan_1 = window.CreateMenuItem("计划：尝试加入拖拽功能");
+                var plan_2 = window.CreateMenuItem("加入: Lua语法高亮");
+                var plan_3 = window.CreateMenuItem("计划：加入自定义配置功能");
                 version.AddMenuItem(change_1);
                 version.AddMenuItem(plan_1);
+                version.AddMenuItem(plan_2);
+                version.AddMenuItem(plan_3);
             };
             Instance.Dispatcher.Invoke(del);
         }

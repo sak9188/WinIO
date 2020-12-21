@@ -84,6 +84,20 @@ namespace WinIO.WPF.ExportPython
             }
         }
 
+        private string syntax;
+
+        public string Syntax
+        {
+            set
+            {
+                syntax = value;
+                SetSyntax(value);
+            }
+            get
+            {
+                return syntax;
+            }
+        }
 
 
         #region 隐藏设置方法
@@ -109,6 +123,12 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOTabItem, PyObject> del = (i, o) => { i.PyOnSelected = o; };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, onSlected);
+        }
+
+        private void SetSyntax(string format)
+        {
+            Action<IOTabItem, string> del = (i, s) => { i.SetSyntaxHighlighting(s); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, format);
         }
         #endregion
 
