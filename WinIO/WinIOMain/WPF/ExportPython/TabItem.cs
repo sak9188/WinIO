@@ -144,6 +144,12 @@ namespace WinIO.WPF.ExportPython
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, str, click);
         }
 
+        public void SetButtonClick(string str, PyObject click)
+        {
+            Action<IOTabItem, string, PyObject> del = (i, s, c) => { i.SetButtonClick(s, c); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, str, click);
+        }
+
         public void AppendString(string str, string color = null, string fontfamily = null, double fontsize = 0)
         {
             Action<IOTabItem, string, string, string, double> del = (i, s, c, sf, d) => { i.AppendString(s, c, sf, d); };

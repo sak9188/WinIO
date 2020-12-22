@@ -32,7 +32,7 @@ namespace WinIO.WPF.Control
 
         // private TextBlock wrapPanelName;
 
-        private Dictionary<Button, PyObject> clicks = new Dictionary<Button, PyObject>();
+        private Dictionary<string, PyObject> clicks = new Dictionary<string, PyObject>();
 
         public IOTabItem(string name, string style, bool isOutput = true)
         {
@@ -67,6 +67,7 @@ namespace WinIO.WPF.Control
                 temp.ShowTabs = true;
                 temp.EnableEmailHyperlinks = false;
                 temp.EnableHyperlinks = false;
+                textEditor.TextArea.SelectionCornerRadius = 0;
                 textEditor.Options = temp;
                 textEditor.KeyDown += TextEditor_KeyDown;
                 textEditor.DragOver += TextEditor_DragOver;
@@ -110,15 +111,20 @@ namespace WinIO.WPF.Control
             button.Content = name;
             button.Style = (Style)Control.Resources["TabPanelButton"];
             button.Click += Button_Click;
-            clicks.Add(button, OnClick);
+            clicks.Add(name, OnClick);
             wrapPanel.Children.Add(button);
+        }
+
+        public void SetButtonClick(string name, PyObject OnClick)
+        {
+            clicks[name] = OnClick;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button bu = (Button)sender;
             PyObject click = null;
-            if (clicks.TryGetValue(bu, out click))
+            if (clicks.TryGetValue((string)bu.Content, out click))
             {
                 using(Py.GIL())
                 {
@@ -186,7 +192,7 @@ namespace WinIO.WPF.Control
                 }
                 catch (System.FormatException)
                 {
-                    Console.WriteLine("错误的颜色字符串");
+                    throw;
                 }
             }
             if (fontsize == 0)
@@ -206,7 +212,7 @@ namespace WinIO.WPF.Control
                 sum += GetStringActuallyWidth(i);
             }
 
-            richTextbox.MinPageWidth = sum + 10;
+            richTextbox.MinPageWidth = sum + fontsize;
 
             // 无论输出端干了啥，必须得滚到最下面
             richTextbox.ScrollToEnd();
@@ -257,6 +263,7 @@ namespace WinIO.WPF.Control
                 {
                     fontsize = box.FontSize;
                 }
+                r.FontSize = fontsize;
                 if (fonfamily != null)
                 {
                     r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
@@ -264,7 +271,7 @@ namespace WinIO.WPF.Control
                 p.Inlines.Add(r);
                 p.Inlines.Add(new LineBreak());
                 // box.Document.Blocks.Add(p);
-                box.MinPageWidth = GetStringActuallyWidth(r);
+                box.MinPageWidth = GetStringActuallyWidth(r) + fontsize;
 
                 // 无论输出端干了啥，必须得滚到最下面
                 richTextbox.ScrollToEnd();
@@ -290,7 +297,9 @@ namespace WinIO.WPF.Control
                 IORichTextBox box = richTextbox;
                 Paragraph p = (Paragraph)box.Document.Blocks.LastBlock;
                 p.Inlines.Clear();
-            }else
+                richTextbox.MinPageWidth = 0;
+            }
+            else
             {
                 textEditor.Clear();
             }

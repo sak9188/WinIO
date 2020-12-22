@@ -4,7 +4,7 @@
                     xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing"
                     xmlns:local="clr-namespace:WinIO.WPF.Control">
     <Style TargetType="{x:Type local:IOTabControl}">
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="#90000000" />
         <Setter Property="Margin" Value="1"/>
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="AllowDrop" Value="True" />

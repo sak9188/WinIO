@@ -101,7 +101,7 @@
                         <Rectangle DockPanel.Dock="Left" x:Name="L1" Width="1" Fill="Transparent"/>
                         <!--top   -->
                         <Rectangle DockPanel.Dock="Top" x:Name="T1" Height="1" Fill="Transparent"/>
-                        <ContentPresenter x:Name="ContentContainer" Margin="2,2,2,2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <ContentPresenter x:Name="ContentContainer" Margin="2,2,2,2"/>
                     </DockPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="true">
@@ -198,7 +198,7 @@
                  TargetType="{x:Type MenuItem}">
         <Border x:Name="Border" BorderThickness="1" Background="Transparent">
             <Grid>
-                <TextBlock Padding="15,13,15,13" VerticalAlignment="Center" HorizontalAlignment="Center"
+                <TextBlock Padding="12,9" VerticalAlignment="Center" HorizontalAlignment="Center"
                                Text="{Binding Header,RelativeSource={RelativeSource TemplatedParent}}">
                 </TextBlock>
                 <Popup x:Name="Popup"
@@ -251,7 +251,7 @@
                  TargetType="{x:Type MenuItem}">
         <Border x:Name="Border">
             <Grid>
-                <ContentPresenter Margin="6,3,6,3"
+                <ContentPresenter Margin="6,3"
                         ContentSource="Header"
                         RecognizesAccessKey="True" />
             </Grid>
@@ -292,29 +292,16 @@
                     <ColumnDefinition Width="15" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon"
-                        Margin="6,0,6,0"
+                        Margin="3,0"
                         VerticalAlignment="Center"
                         ContentSource="Icon" />
                 <Border x:Name="Check"
-              Width="13"
-              Height="13"
-              Visibility="Collapsed"
-              Margin="6,0,6,0"
-              BorderThickness="1">
-                    <Border.BorderBrush>
-                        <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="0,1">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStopCollection>
-                                    <GradientStop Color="{DynamicResource BorderLightColor}"
-                              Offset="0.0" />
-                                    <GradientStop Color="{DynamicResource BorderDarkColor}"
-                              Offset="1.0" />
-                                </GradientStopCollection>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-
-                    </Border.BorderBrush>
+                          Width="13"
+                          Height="13"
+                          Visibility="Collapsed"
+                          Margin="3,0"
+                          BorderThickness="1"
+                          BorderBrush="{DynamicResource BorderDarkColor}">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0"
                                EndPoint="0,1">
@@ -342,7 +329,7 @@
                 <ContentPresenter x:Name="HeaderHost"
                         Grid.Column="1"
                         ContentSource="Header"
-                        Margin="0,7,30,7" TextBlock.TextAlignment="Center"
+                        Margin="0,4,30,4" TextBlock.TextAlignment="Center"
                         RecognizesAccessKey="True" />
                 <TextBlock x:Name="InputGestureText"
                  Grid.Column="2"

@@ -76,7 +76,21 @@ namespace WinIO.WPF
         {
             //可以记录日志并转向错误bug窗口友好提示用户
             e.Handled = true;
-            Console.WriteLine("Wrong:" + e.Exception.Message + "\r\n" + e.Exception.StackTrace);
+            string estring = e.Exception.Message + "\r\n" + e.Exception.StackTrace;
+#if DEBUG
+            Console.WriteLine("Wrong:" + estring);
+#endif
+            if (e.Exception.Source.StartsWith("Python"))
+            {
+                using (Py.GIL())
+                {
+                    using (var pyScope = Py.CreateScope())
+                    {
+                        pyScope.Set("exp", e.Exception.Message);
+                        pyScope.Exec("print exp");
+                    }
+                }
+            }
         }
     }
 }
