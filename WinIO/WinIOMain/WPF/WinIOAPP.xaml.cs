@@ -66,11 +66,13 @@ namespace WinIO.WPF
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             //可以记录日志并转向错误bug窗口友好提示用户
+#if DEBUG
             if (e.ExceptionObject is System.Exception)
             {
                 Exception ex = (System.Exception)e.ExceptionObject;
                 Console.WriteLine("Wrong:" + e.ToString());
             }
+#endif
         }
         void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {

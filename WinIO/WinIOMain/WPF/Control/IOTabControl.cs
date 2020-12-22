@@ -31,6 +31,7 @@ namespace WinIO.WPF.Control
                     parent.Items.Remove(item);
                     this.Items.Add(item);
                     this.SelectedItem = item;
+                    item.TabPanelID = ((MainWindow)WinIOAPP.Instance.MainWindow).GetTabIndex(this);
                 }
             }
             e.Handled = true;

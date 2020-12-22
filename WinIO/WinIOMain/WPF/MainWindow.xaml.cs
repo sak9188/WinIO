@@ -144,5 +144,10 @@ namespace WinIO.WPF
         {
             return new Tuple<double, double>(this.Height, this.Width);
         }
+
+        public int GetTabIndex(IOTabControl control)
+        {
+            return tabs.IndexOf(control);
+        }
     }
 }

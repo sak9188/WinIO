@@ -99,6 +99,14 @@ namespace WinIO.WPF.ExportPython
             }
         }
 
+        public int TabIndex
+        {
+            get
+            {
+                return GetTabIndex();
+            }
+        }
+
 
         #region 隐藏设置方法
         private bool SetFontSize(double fontsize)
@@ -129,6 +137,12 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOTabItem, string> del = (i, s) => { i.SetSyntaxHighlighting(s); };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, format);
+        }
+
+        private int GetTabIndex()
+        {
+            Func<IOTabItem, int> del = (i) => { return i.TabPanelID; };
+            return (int)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
         }
         #endregion
 

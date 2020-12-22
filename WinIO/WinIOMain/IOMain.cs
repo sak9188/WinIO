@@ -49,9 +49,9 @@ namespace WinIO.IOConsole
                 WinIOAPP.CustomInit();
                 PythonEngine.EndAllowThreads(state);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e.ToString());
+                throw;
             }
             while (true)
             {
