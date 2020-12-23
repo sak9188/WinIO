@@ -74,8 +74,6 @@ namespace ICSharpCode.AvalonEdit
 
 			SetCurrentValue(OptionsProperty, textArea.Options);
 			SetCurrentValue(DocumentProperty, new TextDocument());
-
-			Resources.Source = new Uri(@"pack://application:,,,/wpf/codeeditor/texteditor.xaml");
 		}
 
 		#endregion

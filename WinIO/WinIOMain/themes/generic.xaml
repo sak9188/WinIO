@@ -7,7 +7,8 @@
         <ResourceDictionary Source="/WinIO;component/wpf/CodeEditor/Search/SearchPanel.xaml" />
         <ResourceDictionary Source="/WinIO;component/wpf/CodeEditor/CodeCompletion/CompletionList.xaml" />
         <ResourceDictionary Source="/WinIO;component/wpf/CodeEditor/CodeCompletion/InsightWindow.xaml" />
-	</ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
 	<Style TargetType="{x:Type editing:LineNumberMargin}">
         <Setter Property="Control.Cursor" Value="/WinIO;component/themes/RightArrow.cur"/>

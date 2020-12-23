@@ -4,20 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
-        xmlns:AvalonEdit="clr-namespace:ICSharpCode.AvalonEdit"
-        xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing"
         xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="False"
-        Title="WinIO" Height="597.576" Width="873.476" TintOpacity="0.90"
-        BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
+        Title="WinIO" Height="900" Width="1500" TintOpacity="0.90"
+        BorderBrush="#66000000">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/FluentWPF;component/Styles/Controls.xaml"/>
-                <ResourceDictionary Source="control\Control.Menu.xaml"/>
-                <ResourceDictionary Source="control\Control.xaml"/>
+                <ResourceDictionary Source="/WinIO;component/wpf/control/Control.Menu.xaml"/>
+                <ResourceDictionary Source="control/Control.xaml"/>
                 <ResourceDictionary Source="Main.xaml"/>
+                <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -79,23 +77,3 @@
 
     </Grid>
 </fw:AcrylicWindow>
-
-<!--<WrapPanel>
-                    <TextBox x:Name="IOOutput" 
-                        AcceptsReturn="True" IsReadOnly="True"
-                        Foreground="{DynamicResource SystemBaseMediumHighColorBrush}"
-                        Background="#90000000"
-                        FontSize="13"  BorderThickness="0"
-                        HorizontalScrollBarVisibility="Auto"
-                        VerticalScrollBarVisibility="Auto"
-                        Text="123123 123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123123">
-                        -->
-<!--<TextBox.Height>
-                            <MultiBinding Converter="{ikriv:MathConverter}" ConverterParameter="x-y-5">
-                                <Binding ElementName="Splitter0" Path="ActualHeight"/>
-                                <Binding ElementName="TabItem0" Path="ActualHeight" />
-                            </MultiBinding>
-                        </TextBox.Height>-->
-<!--
-                    </TextBox>
-                </WrapPanel>-->

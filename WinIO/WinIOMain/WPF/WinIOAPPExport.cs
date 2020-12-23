@@ -22,8 +22,8 @@ namespace WinIO.WPF
                 version.AddMenuItem(window.CreateMenuItem("加入: Lua语法高亮"));
                 version.AddMenuItem(window.CreateMenuItem("加入: 可交互IO"));
                 version.AddMenuItem(window.CreateMenuItem("加入：拖拽功能"));
+                version.AddMenuItem(window.CreateMenuItem("加入：自定义配置功能"));
                 version.AddMenuItem(window.CreateMenuItem("取消：alt键多选的功能"));
-                version.AddMenuItem(window.CreateMenuItem("计划：加入自定义配置功能"));
                 version.AddMenuItem(window.CreateMenuItem("计划：加入代码提示功能"));
                 version.AddMenuItem(window.CreateMenuItem("计划：加入任意panel多选"));
                 version.AddMenuItem(window.CreateMenuItem("计划：加入QDir布局"));
@@ -40,7 +40,7 @@ namespace WinIO.WPF
         public void SetWindowSize(double hight, double width)
         {
             Action<double, double> del = (h, w) => { ((MainWindow)Instance.MainWindow).SetWindowsSize(h, w); };
-            Instance.Dispatcher.Invoke(del);
+            Instance.Dispatcher.Invoke(del, hight, width);
         }
 
         public ExportPython.MenuItem CreateMenuItem(string header, bool toplevel=false)

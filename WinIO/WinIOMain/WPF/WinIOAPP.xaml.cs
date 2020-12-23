@@ -30,13 +30,13 @@ namespace WinIO.WPF
             Instance.MainWindow = new MainWindow(Thread.CurrentThread);
             Instance.MainWindow.Show();
             var dispatcher = Instance.MainWindow.Dispatcher;
-            Instance.MainWindow.Closed += (sender, e) =>
+            Instance.MainWindow.Closing += (sender, e) =>
             {
                 using(Py.GIL())
                 {
-                    if (WinIOAPP.Instance.PyClosed != null)
+                    if (Instance.PyClosed != null)
                     {
-                        WinIOAPP.Instance.PyClosed.Invoke();
+                        Instance.PyClosed.Invoke();
                     }
                 }
                 dispatcher.InvokeShutdown();

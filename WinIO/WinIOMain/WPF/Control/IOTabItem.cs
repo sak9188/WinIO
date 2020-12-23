@@ -67,6 +67,7 @@ namespace WinIO.WPF.Control
                 temp.ShowTabs = true;
                 temp.EnableEmailHyperlinks = false;
                 temp.EnableHyperlinks = false;
+                temp.HighlightCurrentLine = true;
                 textEditor.TextArea.SelectionCornerRadius = 0;
                 textEditor.Options = temp;
                 textEditor.KeyDown += TextEditor_KeyDown;
