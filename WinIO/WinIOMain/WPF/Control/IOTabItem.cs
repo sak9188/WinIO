@@ -318,7 +318,7 @@ namespace WinIO.WPF.Control
                 var aLine = strReader.ReadLine();
                 if (aLine != null && aLine.Trim().StartsWith("#"))
                 {
-                    anotText += aLine.Substring(1);
+                    anotText += aLine.Trim().Substring(1);
                     anotText += "\n";
                 }
                 else
