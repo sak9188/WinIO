@@ -4,6 +4,7 @@ using Python.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace WinIO.WPF.Control
         public PyObject PyOnSelected { set; get; }
 
         private PyObject PyInputObject;
+        private PyObject PyInputObjectKeyUp;
 
         // private TextBlock wrapPanelName;
 
@@ -70,8 +72,8 @@ namespace WinIO.WPF.Control
                 temp.HighlightCurrentLine = true;
                 textEditor.TextArea.SelectionCornerRadius = 0;
                 textEditor.Options = temp;
+                textEditor.KeyUp += TextEditor_KeyUp;
                 textEditor.KeyDown += TextEditor_KeyDown;
-                textEditor.DragOver += TextEditor_DragOver;
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
                 Grid.SetRow(textEditor, 1);
@@ -89,9 +91,15 @@ namespace WinIO.WPF.Control
             orignalHeader = name;
         }
 
-        private void TextEditor_DragOver(object sender, DragEventArgs e)
+        private void TextEditor_KeyUp(object sender, KeyEventArgs e)
         {
-            e.Handled = true;
+            if (PyInputObjectKeyUp != null)
+            {
+                using (Py.GIL())
+                {
+                    PyInputObjectKeyUp.Invoke(e.Key.ToPython(), e.Key.ToString().ToPython());
+                }
+            }
         }
 
         private void TextEditor_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -279,6 +287,52 @@ namespace WinIO.WPF.Control
             }
         }
 
+        public void QuickAnnotation()
+        {
+            string text = textEditor.SelectedText;
+            string anotText = "";
+            StringReader strReader = new StringReader(text);
+            while (true)
+            {
+                var aLine = strReader.ReadLine();
+                if (aLine != null)
+                {
+                    anotText += ("#" + aLine);
+                    anotText += "\n";
+                }
+                else
+                {
+                    break;
+                }
+            }
+            textEditor.SelectedText = anotText.TrimEnd('\n');
+        }
+
+        public void QuickAntiAnnotation()
+        {
+            string text = textEditor.SelectedText;
+            string anotText = "";
+            StringReader strReader = new StringReader(text);
+            while (true)
+            {
+                var aLine = strReader.ReadLine();
+                if (aLine != null && aLine.Trim().StartsWith("#"))
+                {
+                    anotText += aLine.Substring(1);
+                    anotText += "\n";
+                }
+                else
+                {
+                    break;
+                }
+            }
+            anotText = anotText.TrimEnd('\n');
+            if (anotText != "")
+            {
+                textEditor.SelectedText = anotText;
+            }
+        }
+
         public string GetText()
         {
             if(this.isOutput)
@@ -319,6 +373,18 @@ namespace WinIO.WPF.Control
             }else
             {
                 PyInputObject = pyKeyDown;
+            }
+        }
+
+        public void SetRichBoxKeyUpEvent(PyObject pyKeyUp)
+        {
+            if (this.isOutput)
+            {
+                // richTextbox.PyKeyDown = pyKeyDown;
+            }
+            else
+            {
+                PyInputObjectKeyUp = pyKeyUp;
             }
         }
 

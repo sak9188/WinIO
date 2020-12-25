@@ -188,6 +188,24 @@ namespace WinIO.WPF.ExportPython
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, pyKeyDown);
         }
 
+        public void SetKeyUp(PyObject pyKeyDown)
+        {
+            Action<IOTabItem, PyObject> del = (i, p) => { i.SetRichBoxKeyUpEvent(p); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, pyKeyDown);
+        }
+
+        public void QuickAnotation()
+        {
+            Action<IOTabItem> del = (i) => { i.QuickAnnotation(); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        public void QuickAntiAnnotation()
+        {
+            Action<IOTabItem> del = (i) => { i.QuickAntiAnnotation(); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
         public string GetText()
         {
             Func<IOTabItem, string> del = (i) => { return i.GetText(); };

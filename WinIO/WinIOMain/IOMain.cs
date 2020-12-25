@@ -30,7 +30,7 @@ namespace WinIO.IOConsole
 
         [STAThread]
         static void Main(string[] args)
-      {
+        {
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
             RealMain();
         }
