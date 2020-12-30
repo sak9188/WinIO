@@ -84,6 +84,21 @@ namespace WinIO.WPF.ExportPython
             }
         }
 
+        private PyObject onTextEntered;
+
+        public PyObject OnTextEntered
+        {
+            set
+            {
+                onTextEntered = value;
+                SetOnTextEntered(value);
+            }
+            get
+            {
+                return onTextEntered;
+            }
+        }
+
         private string syntax;
 
         public string Syntax
@@ -104,6 +119,38 @@ namespace WinIO.WPF.ExportPython
             get
             {
                 return GetTabIndex();
+            }
+        }
+
+        public PyObject CompleteData
+        {
+            set
+            {
+                if(!PyList.IsListType(value))
+                {
+                    return;
+                }
+                SetCompleteData(value);
+            }
+            get
+            {
+                return GetCompleteData();
+            }
+        }
+
+        public int CurrentLineNumber
+        {
+            get
+            {
+                return GetCurrentLineNumber();
+            }
+        }
+
+        public string AboveText
+        {
+            get
+            {
+                return GetAboveText();
             }
         }
 
@@ -133,6 +180,12 @@ namespace WinIO.WPF.ExportPython
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, onSlected);
         }
 
+        private void SetOnTextEntered(PyObject onEntered)
+        {
+            Action<IOTabItem, PyObject> del = (i, o) => { i.PyTextEntered = o; };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, onEntered);
+        }
+
         private void SetSyntax(string format)
         {
             Action<IOTabItem, string> del = (i, s) => { i.SetSyntaxHighlighting(s); };
@@ -143,6 +196,30 @@ namespace WinIO.WPF.ExportPython
         {
             Func<IOTabItem, int> del = (i) => { return i.TabPanelID; };
             return (int)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        private int GetCurrentLineNumber()
+        {
+            Func<IOTabItem, int> del = (i) => { return i.GetLineNumber(); };
+            return (int)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        private string GetAboveText()
+        {
+            Func<IOTabItem, string> del = (i) => { return i.GetAboveText(); };
+            return (string)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        private void SetCompleteData(PyObject tup)
+        {
+            Action<IOTabItem, PyObject> del = (i, t) => { i.PyComDataList = t; };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, tup);
+        }
+
+        private PyObject GetCompleteData()
+        {
+            Func<IOTabItem, PyObject> del = (i) => { return i.PyComDataList; };
+            return (PyObject)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
         }
         #endregion
 

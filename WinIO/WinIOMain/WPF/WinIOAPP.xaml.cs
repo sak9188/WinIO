@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -86,11 +87,30 @@ namespace WinIO.WPF
             {
                 using (Py.GIL())
                 {
-                    using (var pyScope = Py.CreateScope())
+                    string stack = e.Exception.StackTrace;
+                    int idx = stack.IndexOf(']');
+                    stack = stack.Substring(0, idx);
+                    string pattern = "(')(?:(?!\\1).)*?\\1";
+                    PyPrint(e.Exception.Message);
+                    PyPrint("Traceback");
+                    foreach (Match match in Regex.Matches(stack, pattern))
                     {
-                        pyScope.Set("exp", e.Exception.Message);
-                        pyScope.Exec("print exp");
+                        var tims = match.Value.Trim('\'');
+                        tims = tims.Replace("\\n", "\n");
+                        PyPrint(tims);
                     }
+                }
+            }
+        }
+
+        public void PyPrint(string s)
+        {
+            using (Py.GIL())
+            {
+                using (var pyScope = Py.CreateScope())
+                {
+                    pyScope.Set("exp", s);
+                    pyScope.Exec("print exp");
                 }
             }
         }

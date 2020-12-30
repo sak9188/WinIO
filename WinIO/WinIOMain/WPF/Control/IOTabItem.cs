@@ -1,4 +1,5 @@
 ﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Python.Runtime;
 using System;
@@ -27,10 +28,27 @@ namespace WinIO.WPF.Control
 
         public int TabPanelID { set; get; }
 
+        private PyObject pyComDataList;
+        public PyObject PyComDataList 
+        { 
+            set
+            {
+                if(PyList.IsListType(value))
+                {
+                    pyComDataList = value;
+                }
+            }
+            get
+            {
+                return pyComDataList;
+            }
+        }
+        public PyObject PyTextEntered { set; get; }
         public PyObject PyOnSelected { set; get; }
-
         private PyObject PyInputObject;
         private PyObject PyInputObjectKeyUp;
+
+        CompletionWindow completionWindow;
 
         // private TextBlock wrapPanelName;
 
@@ -74,6 +92,8 @@ namespace WinIO.WPF.Control
                 textEditor.Options = temp;
                 textEditor.KeyUp += TextEditor_KeyUp;
                 textEditor.KeyDown += TextEditor_KeyDown;
+                textEditor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+                textEditor.TextArea.TextEntered += TextArea_TextEntered;
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
                 Grid.SetRow(textEditor, 1);
@@ -90,6 +110,8 @@ namespace WinIO.WPF.Control
             this.Header = name;
             orignalHeader = name;
         }
+
+
 
         private void TextEditor_KeyUp(object sender, KeyEventArgs e)
         {
@@ -441,6 +463,60 @@ namespace WinIO.WPF.Control
                 Mouse.SetCursor(Cursors.No);
             }
             e.Handled = true;
+        }
+
+        public int GetLineNumber()
+        {
+            if(textEditor != null)
+            {
+                return textEditor.TextArea.Caret.Line;
+            }
+            return -1;
+        }
+
+        public string GetAboveText()
+        {
+            int offset = textEditor.Document.GetOffset(GetLineNumber(), 0);
+            return textEditor.TextArea.Document.GetText(0, offset);
+        }
+
+        private void Caret_PositionChanged(object sender, EventArgs e)
+        {
+            // throw new NotImplementedException();
+        }
+
+        private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
+        {
+            if(PyTextEntered != null)
+            {
+                List<string> list = new List<string>();
+                using(Py.GIL())
+                {
+                    PyTextEntered.Invoke(e.Text.ToPython());
+                    if (PyComDataList != null)
+                    {
+                        var i = PyComDataList.Length();
+                        foreach (var item in PyComDataList)
+                        {
+                            list.Add(item.ToString());
+                        }
+                    }
+                }
+                completionWindow = new CompletionWindow(textEditor.TextArea);
+                completionWindow.ResizeMode = ResizeMode.NoResize;
+                var data = completionWindow.CompletionList.CompletionData;
+                foreach (var item in list)
+                {
+                    data.Add(new IOCompletionData(item));
+                }
+                if(data.Count > 0)
+                {
+                    completionWindow.Show();
+                    completionWindow.Closed += delegate {
+                        completionWindow = null;
+                    };
+                }
+            }
         }
     }
 }

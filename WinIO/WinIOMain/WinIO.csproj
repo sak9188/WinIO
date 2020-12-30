@@ -344,6 +344,7 @@
     <Compile Include="WPF\CodeEditor\Utils\WeakEventManagerBase.cs" />
     <Compile Include="WPF\CodeEditor\Utils\Win32.cs" />
     <Compile Include="WPF\Control\Control.cs" />
+    <Compile Include="WPF\Control\IOCompletionData.cs" />
     <Compile Include="WPF\Control\IOMenuItem.cs" />
     <Compile Include="WPF\Control\IORichTextBox.cs" />
     <Compile Include="WPF\Control\IOTabControl.cs" />
