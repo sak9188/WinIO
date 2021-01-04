@@ -4,6 +4,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using Python.Runtime;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -43,6 +44,8 @@ namespace WinIO.WPF.Control
                 return pyComDataList;
             }
         }
+
+        public PyObject PyMouseDown { set; get; }
         public PyObject PyTextEntered { set; get; }
         public PyObject PyOnSelected { set; get; }
         private PyObject PyInputObject;
@@ -91,9 +94,10 @@ namespace WinIO.WPF.Control
                 textEditor.TextArea.SelectionCornerRadius = 0;
                 textEditor.Options = temp;
                 textEditor.KeyUp += TextEditor_KeyUp;
-                textEditor.KeyDown += TextEditor_KeyDown;
-                textEditor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
+                textEditor.PreviewKeyDown += TextEditor_KeyDown;
+                textEditor.PreviewMouseLeftButtonUp += TextEditor_MouseUp;
                 textEditor.TextArea.TextEntered += TextArea_TextEntered;
+                //DataObject.AddPastingHandler(textEditor, TextArea_TextPasted);
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
                 Grid.SetRow(textEditor, 1);
@@ -432,10 +436,10 @@ namespace WinIO.WPF.Control
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if(e.Source == this)
-            {
-                base.OnMouseMove(e);
+            base.OnMouseMove(e);
 
+            if (e.Source == this)
+            {
                 // 判断左键是否按下
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
@@ -480,41 +484,88 @@ namespace WinIO.WPF.Control
             return textEditor.TextArea.Document.GetText(0, offset);
         }
 
-        private void Caret_PositionChanged(object sender, EventArgs e)
+        public string GetCurrentLineBefore()
         {
-            // throw new NotImplementedException();
+            int start = textEditor.Document.GetOffset(GetLineNumber(), 0);
+            int end = textEditor.TextArea.Caret.Column == 0 ? 0 : textEditor.TextArea.Caret.Column - 1;
+            return textEditor.Document.GetText(start, end);
+        }
+
+        public string GetLineString(int line)
+        {
+            if(line > 0 && textEditor.Document.LineCount >= line)
+            {
+                int start = textEditor.Document.GetOffset(line, 0);
+                int end = textEditor.Document.GetLineByNumber(line).Length;
+                return textEditor.Document.GetText(start, end);
+            }
+            return "";
+        }
+
+        public int GetLineCusorPos()
+        {
+            return textEditor.TextArea.Caret.Column;
+        }
+
+        private void TextEditor_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (PyMouseDown != null)
+            {
+                using (Py.GIL())
+                {
+                    PyMouseDown.Invoke();
+                }
+            }
+        }
+
+        private void TextArea_TextPasted(object sender, DataObjectPastingEventArgs e)
+        {
+            var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
+            if (!isText) return;
+            var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
+            TextPythonEntered(text);
         }
 
         private void TextArea_TextEntered(object sender, TextCompositionEventArgs e)
         {
-            if(PyTextEntered != null)
+            TextPythonEntered(e.Text);
+        }
+
+        void TextPythonEntered(string text)
+        {
+            if (PyTextEntered != null)
             {
                 List<string> list = new List<string>();
-                using(Py.GIL())
+                using (Py.GIL())
                 {
-                    PyTextEntered.Invoke(e.Text.ToPython());
+                    PyTextEntered.Invoke(text.ToPython());
                     if (PyComDataList != null)
                     {
-                        var i = PyComDataList.Length();
                         foreach (var item in PyComDataList)
                         {
                             list.Add(item.ToString());
                         }
                     }
                 }
+
                 completionWindow = new CompletionWindow(textEditor.TextArea);
                 completionWindow.ResizeMode = ResizeMode.NoResize;
                 var data = completionWindow.CompletionList.CompletionData;
-                foreach (var item in list)
+                int len;
+                if(list.Count > 0 && int.TryParse(list[0], out len))
                 {
-                    data.Add(new IOCompletionData(item));
-                }
-                if(data.Count > 0)
-                {
-                    completionWindow.Show();
-                    completionWindow.Closed += delegate {
-                        completionWindow = null;
-                    };
+                    list.RemoveAt(0);
+                    foreach (var item in list)
+                    {
+                        data.Add(new IOCompletionData(item, len));
+                    }
+                    if (data.Count > 0)
+                    {
+                        completionWindow.Show();
+                        completionWindow.Closed += delegate {
+                            completionWindow = null;
+                        };
+                    }
                 }
             }
         }

@@ -12,9 +12,11 @@ namespace WinIO.WPF.Control
 {
     public class IOCompletionData : ICompletionData
     {
-		public IOCompletionData(string text)
+		public static int Lenth = 0;
+		public IOCompletionData(string text, int lenth)
 		{
 			this.Text = text;
+			Lenth = lenth;
 		}
 
 		public ImageSource Image
@@ -38,7 +40,7 @@ namespace WinIO.WPF.Control
 
 		public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
 		{
-			textArea.Document.Replace(completionSegment, this.Text);
+			textArea.Document.Replace(completionSegment, this.Text.Substring(Lenth));
 		}
 	}
 }

@@ -99,6 +99,21 @@ namespace WinIO.WPF.ExportPython
             }
         }
 
+        private PyObject onMouseClick;
+
+        public PyObject OnMouseClick
+        {
+            set
+            {
+                onMouseClick = value;
+                SetOnMouseDown(value);
+            }
+            get
+            {
+                return onMouseClick;
+            }
+        }
+
         private string syntax;
 
         public string Syntax
@@ -184,6 +199,12 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOTabItem, PyObject> del = (i, o) => { i.PyTextEntered = o; };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, onEntered);
+        }
+
+        private void SetOnMouseDown(PyObject onDown)
+        {
+            Action<IOTabItem, PyObject> del = (i, o) => { i.PyMouseDown = o; };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, onDown);
         }
 
         private void SetSyntax(string format)
@@ -289,6 +310,23 @@ namespace WinIO.WPF.ExportPython
             return (string)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
         }
 
+        public string GetCurrentLineBefore()
+        {
+            Func<IOTabItem, string> del = (i) => { return i.GetCurrentLineBefore(); };
+            return (string)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        public string GetLineString(int line)
+        {
+            Func<IOTabItem, int, string> del = (i, l) => { return i.GetLineString(l); };
+            return (string)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, line);
+        }
+
+        public int GetLineCusorPos()
+        {
+            Func<IOTabItem, int> del = (i) => { return i.GetLineCusorPos(); };
+            return (int)WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
 
         public void Clear()
         {
