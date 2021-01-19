@@ -23,9 +23,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.7.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -95,6 +96,18 @@
     <ApplicationIcon>bitbug_favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>5DD6150076B321A1825596C094671944B113DBF2</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>WinIO_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentWPF, Version=0.8.0.6, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -411,6 +424,7 @@
     <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\XML-Mode.xshd" />
     <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\XmlDoc.xshd" />
     <EmbeddedResource Include="WPF\CodeEditor\Highlighting\Resources\Lua-Mode.xshd" />
+    <None Include="WinIO_TemporaryKey.pfx" />
     <None Include="WPF\WinIOAPP.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
