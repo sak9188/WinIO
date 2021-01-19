@@ -464,7 +464,7 @@
     <Content Include="WPF\CodeEditor\Properties\CodeAnalysisDictionary.xml" />
     <Content Include="WPF\CodeEditor\Search\next.png" />
     <Content Include="WPF\CodeEditor\Search\prev.png" />
-    <Content Include="themes\RightArrow.cur" />
+    <Resource Include="themes\RightArrow.cur" />
   </ItemGroup>
   <Target Name="ILMerge">
     <Exec Command="$(ILMergeConsolePath) Bin\x64\Release\WinIOMain.exe ^&#xD;&#xA;    /out:WinIOMainPacked.exe ^&#xD;&#xA;    Bin\x64\Release\Python.Runtime.dll ^&#xD;&#xA;    Bin\x64\Release\FluentWPF.dll " />

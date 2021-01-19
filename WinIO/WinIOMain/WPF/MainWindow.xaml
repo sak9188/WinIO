@@ -26,12 +26,12 @@
             <RowDefinition x:Name="GridRow1" Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="GridCol0" Width="*">
+            <ColumnDefinition x:Name="GridCol0" Width="30*">
             </ColumnDefinition>
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40*" />
             <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
         <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
               Background="Transparent" FontSize="13" Foreground="{DynamicResource SystemBaseMediumHighColorBrush}">

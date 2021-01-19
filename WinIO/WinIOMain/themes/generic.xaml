@@ -10,7 +10,7 @@
         <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-	<Style TargetType="{x:Type editing:LineNumberMargin}">
+    <Style TargetType="{x:Type editing:LineNumberMargin}">
         <Setter Property="Control.Cursor" Value="/WinIO;component/themes/RightArrow.cur"/>
-	</Style>
+    </Style>
 </ResourceDictionary>

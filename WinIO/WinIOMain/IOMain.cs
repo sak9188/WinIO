@@ -19,7 +19,8 @@ namespace WinIO.IOConsole
         private static Assembly OnResolveAssembly(object sender, ResolveEventArgs args)
         {
             string resourceName = new AssemblyName(args.Name).Name;
-            resourceName = Assembly.GetExecutingAssembly().GetManifestResourceNames().First(x => x.Contains(resourceName+".dll"));
+            resourceName = Assembly.GetExecutingAssembly().GetManifestResourceNames().FirstOrDefault(x => x.Contains(resourceName+".dll"));
+            if(resourceName == null) return null;
             using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
             {
                 byte[] assemblyData = new byte[stream.Length];

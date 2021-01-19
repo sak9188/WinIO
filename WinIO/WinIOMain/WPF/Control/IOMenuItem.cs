@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace WinIO.WPF.Control
 {
@@ -22,6 +23,10 @@ namespace WinIO.WPF.Control
             {
                 return onClick;
             }
+        }
+
+        public IOMenuItem() : base()
+        {
         }
 
         public void AddMenuItem(IOMenuItem subitem)

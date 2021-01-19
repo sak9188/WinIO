@@ -194,7 +194,7 @@
 
     <!-- TopLevelHeader -->
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelHeaderTemplateKey}"
-                 TargetType="{x:Type MenuItem}">
+                 TargetType="{x:Type local:IOMenuItem}">
         <Border x:Name="Border" BorderThickness="1" Background="Transparent">
             <Grid>
                 <TextBlock Padding="12,9" VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -246,7 +246,7 @@
 
     <!-- TopLevelItem -->
     <ControlTemplate x:Key="{x:Static MenuItem.TopLevelItemTemplateKey}"
-                 TargetType="{x:Type MenuItem}">
+                 TargetType="{x:Type local:IOMenuItem}">
         <Border x:Name="Border">
             <Grid>
                 <ContentPresenter Margin="6,3"
@@ -277,7 +277,7 @@
 
     <!-- SubmenuItem -->
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuItemTemplateKey}"
-                 TargetType="{x:Type MenuItem}">
+                 TargetType="{x:Type local:IOMenuItem}">
         <Border x:Name="Border" Background="Transparent"
           BorderThickness="1">
             <Grid>
@@ -375,7 +375,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="{x:Static MenuItem.SubmenuHeaderTemplateKey}"
-                 TargetType="{x:Type MenuItem}">
+                 TargetType="{x:Type local:IOMenuItem}">
         <Border x:Name="Border"
           BorderThickness="1" Background="Transparent">
             <Grid>
@@ -458,7 +458,7 @@
 
     <!-- MenuItem Style -->
     <Style x:Key="{x:Type MenuItem}"
-       TargetType="{x:Type MenuItem}">
+       TargetType="{x:Type local:IOMenuItem}">
         <Setter Property="OverridesDefaultStyle"
           Value="True" />
         <Style.Triggers>

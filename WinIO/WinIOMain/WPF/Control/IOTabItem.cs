@@ -86,6 +86,7 @@ namespace WinIO.WPF.Control
                 TextEditor textEditor = new TextEditor();
                 textEditor.Style = (Style)Control.Resources[style];
                 var temp = new TextEditorOptions();
+                temp.ShowEndOfLine = true;
                 temp.ShowSpaces = true;
                 temp.ShowTabs = true;
                 temp.EnableEmailHyperlinks = false;
@@ -98,9 +99,11 @@ namespace WinIO.WPF.Control
                 textEditor.PreviewMouseLeftButtonUp += TextEditor_MouseUp;
                 textEditor.TextArea.TextEntered += TextArea_TextEntered;
                 //DataObject.AddPastingHandler(textEditor, TextArea_TextPasted);
+                textEditor.ShowLineNumbers = true;
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
                 Grid.SetRow(textEditor, 1);
+                
             }
 
             // WrapPanel

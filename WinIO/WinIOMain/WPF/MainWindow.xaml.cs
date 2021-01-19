@@ -128,7 +128,8 @@ namespace WinIO.WPF
         private void Init()
         {
             InitializeComponent();
-
+            System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
+            
             tabs.Add(TabControl0);
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);
