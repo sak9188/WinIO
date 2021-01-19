@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="False"
-        Title="WinIO" Height="900" Width="1500" TintOpacity="0.90"
+        Title="WinIO" Height="900" Width="1500" TintOpacity="0.70"
         BorderBrush="#66000000">
     <Window.Resources>
         <ResourceDictionary>
@@ -20,7 +20,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" Background="#30707070">
+    <Grid x:Name="MainGrid" Background="#77000000" fw:PointerTracker.Enabled="True">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="GridRow0" Height="Auto"/>
             <RowDefinition x:Name="GridRow1" Height="*"/>
@@ -34,13 +34,15 @@
             <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
         <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
-              Background="Transparent" FontSize="13" Foreground="{DynamicResource SystemBaseMediumHighColorBrush}">
+              Background="#33F0F0F0" FontSize="13" Foreground="{DynamicResource SystemAltMediumHighColorBrush}">
+
         </Menu>
         <local:IOTabControl Grid.Row="1" x:Name="TabControl0" IsHitTestVisible="True"/>
 
         <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
         <local:IOTabControl Grid.Row="1" Grid.Column="2" x:Name="TabControl1" />
+
         <TextBlock Grid.Row="1" Grid.Column="2" FontSize="55" HorizontalAlignment="Center" 
                    VerticalAlignment="Center" TextWrapping="Wrap" Text="Center" >
             <TextBlock.Style>
