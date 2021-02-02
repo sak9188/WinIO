@@ -300,18 +300,6 @@
                           Margin="3,0"
                           BorderThickness="1"
                           BorderBrush="{DynamicResource BorderDarkColor}">
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0"
-                               EndPoint="0,1">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStopCollection>
-                                    <GradientStop Color="Yellow" />
-                                    <GradientStop Color="Black"
-                              Offset="1.0" />
-                                </GradientStopCollection>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                    </Border.Background>
                     <Path x:Name="CheckMark"
                           Width="7"
                           Height="7"
@@ -410,6 +398,7 @@
                         <SolidColorBrush Color="{DynamicResource GlyphColor}" />
                     </Path.Fill>
                 </Path>
+                <!-- Second Level Moidfier -->
                 <Popup x:Name="Popup"
              Placement="Right"
              HorizontalOffset="0"
@@ -420,7 +409,8 @@
                     <Border x:Name="SubmenuBorder"
                 SnapsToDevicePixels="True"
                 BorderThickness="1"
-                Background="{DynamicResource SystemAltMediumHighColorBrush}"
+                
+                Background="{DynamicResource SystemAltMediumLowColorBrush}"
                 BorderBrush="{DynamicResource SystemAltLowColorBrush}">
                         <ScrollViewer CanContentScroll="True"
                         Style="{StaticResource MenuScrollViewer}">
@@ -431,6 +421,7 @@
                 </Popup>
             </Grid>
         </Border>
+
         <ControlTemplate.Triggers>
             <Trigger Property="Icon"
              Value="{x:Null}">
