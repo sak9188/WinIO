@@ -18,12 +18,9 @@ namespace WinIO.WPF
                 var window = ((MainWindow)Instance.MainWindow);
                 var s_version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 var version = window.CreateTopMenuItem("当前版本："+ s_version);
-                version.AddMenuItem(window.CreateMenuItem("加入：代码提示功能"));
-                version.AddMenuItem(window.CreateMenuItem("加入：快捷注释，快捷反注释功能"));
-                version.AddMenuItem(window.CreateMenuItem("加入: Lua语法高亮"));
-                version.AddMenuItem(window.CreateMenuItem("加入: 可交互IO"));
-                version.AddMenuItem(window.CreateMenuItem("加入：拖拽功能"));
-                version.AddMenuItem(window.CreateMenuItem("加入：自定义配置功能"));
+                version.AddMenuItem(window.CreateMenuItem("加入：代码提示功能, 快捷注释，快捷反注释功能"));
+                version.AddMenuItem(window.CreateMenuItem("加入：Lua语法高亮,可交互IO,拖拽功能,自定义配置功能"));
+                version.AddMenuItem(window.CreateMenuItem("优化: 高强度IO环境下，可能会出现卡死的问题"));
                 version.AddMenuItem(window.CreateMenuItem("优化: 浅色主题下IO工具颜色对比度不高的问题"));
                 version.AddMenuItem(window.CreateMenuItem("取消：alt键多选的功能"));
                 version.AddMenuItem(window.CreateMenuItem("TODO：加入任意panel多选"));

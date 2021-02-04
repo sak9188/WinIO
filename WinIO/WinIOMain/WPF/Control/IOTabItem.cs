@@ -3,6 +3,7 @@ using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Python.Runtime;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -15,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace WinIO.WPF.Control
 {
@@ -261,12 +263,14 @@ namespace WinIO.WPF.Control
             this.textEditor.Text = s;
         }
 
+        private static List<Tuple<string, string, string, double>> tuples = new List<Tuple<string, string, string, double>>(maxLines * maxBuffer);
         public void AppendString(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
-            if(this.isOutput)
+            if (this.isOutput)
             {
                 this.AppendOutputString(s, color, fonfamily, fontsize);
-            }else
+            }
+            else
             {
                 this.AppendInputString(s);
             }
@@ -279,42 +283,102 @@ namespace WinIO.WPF.Control
                                     r.FontSize, Brushes.Black).Width;
         }
 
+        private int countLines = 0;
+
+        readonly static int maxLines = 1500;
+        readonly static int maxBuffer = 4;
+
+        private DispatcherTimer timer;
+
         public void AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
             if (this.isOutput)
             {
-                IORichTextBox box = richTextbox;
-                Paragraph p = (Paragraph)richTextbox.Document.Blocks.LastBlock;
-                Run r = new Run(s);
-                if (color != null)
+                if(timer == null)
                 {
-                    try
-                    {
-                        r.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
-                    }
-                    catch (System.FormatException)
-                    {
-                        Console.WriteLine("错误的颜色字符串");
-                    }
+                    timer = new DispatcherTimer();
+                    
+                    // 100 ms 驱动一次
+                    timer.Interval = new TimeSpan(1000000);
+                    timer.Tick += new EventHandler(TimerDriveOutput);
+                    timer.Start();
                 }
-                if (fontsize == 0)
-                {
-                    fontsize = box.FontSize;
-                }
-                r.FontSize = fontsize;
-                if (fonfamily != null)
-                {
-                    r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
-                }
-                p.Inlines.Add(r);
-                p.Inlines.Add(new LineBreak());
-                // box.Document.Blocks.Add(p);
-                box.MinPageWidth = GetStringActuallyWidth(r) + fontsize;
-
-                // 无论输出端干了啥，必须得滚到最下面
-                richTextbox.ScrollToEnd();
+                tuples.Add(new Tuple<string, string, string, double>(s, color, fonfamily, fontsize));
             }
         }
+
+        private void TimerDriveOutput(object sender, EventArgs e)
+        {
+            if(tuples.Count == 0)
+            {
+                return;
+            }
+            else if(tuples.Count > maxLines * (maxBuffer - 1))
+            {
+                tuples.RemoveRange(0, tuples.Count - maxLines * (maxBuffer - 1));
+            }
+
+            int count = 0;
+            foreach (var item in tuples)
+            {
+                if(count >= 100)
+                {
+                    break;
+                }
+                this._AppendLine(item.Item1, item.Item2, item.Item3, item.Item4);
+                count += 1;
+            }
+            tuples.RemoveRange(0, count);
+        }
+
+        public void _AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
+        {
+            IORichTextBox box = richTextbox;
+            Paragraph p = (Paragraph)richTextbox.Document.Blocks.LastBlock;
+            Run r = new Run(s);
+            if (color != null)
+            {
+                try
+                {
+                    r.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                }
+                catch (System.FormatException)
+                {
+                    Console.WriteLine("错误的颜色字符串");
+                }
+            }
+            if (fontsize == 0)
+            {
+                fontsize = box.FontSize;
+            }
+            r.FontSize = fontsize;
+            if (fonfamily != null)
+            {
+                r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
+            }
+            p.Inlines.Add(r);
+            p.Inlines.Add(new LineBreak());
+
+            countLines += 1;
+
+            if (countLines == maxLines)
+            {
+                richTextbox.Document.Blocks.Add(new Paragraph());
+                countLines = 0;
+
+                // 当有3000行的时候，此时这个会移除掉最上面的1000行
+                if (richTextbox.Document.Blocks.Count >= maxBuffer)
+                {
+                    richTextbox.Document.Blocks.Remove(richTextbox.Document.Blocks.FirstBlock);
+                }
+            }
+
+            box.MinPageWidth = GetStringActuallyWidth(r) + fontsize;
+
+            // 无论输出端干了啥，必须得滚到最下面
+            richTextbox.ScrollToEnd();
+        }
+
 
         public void QuickAnnotation()
         {
