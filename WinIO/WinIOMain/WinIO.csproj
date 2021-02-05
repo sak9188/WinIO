@@ -93,7 +93,7 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>bitbug_favicon.ico</ApplicationIcon>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -476,6 +476,7 @@
   <ItemGroup>
     <Content Include="bitbug_favicon.ico" />
     <Content Include="lib\ICSharpCode.AvalonEdit.dll" />
+    <Content Include="Logo.ico" />
     <Content Include="WPF\CodeEditor\Properties\CodeAnalysisDictionary.xml" />
     <Content Include="WPF\CodeEditor\Search\next.png" />
     <Content Include="WPF\CodeEditor\Search\prev.png" />
