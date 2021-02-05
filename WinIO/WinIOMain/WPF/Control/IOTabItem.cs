@@ -263,7 +263,7 @@ namespace WinIO.WPF.Control
             this.textEditor.Text = s;
         }
 
-        private static List<Tuple<string, string, string, double>> tuples = new List<Tuple<string, string, string, double>>(maxLines * maxBuffer);
+        private List<Tuple<string, string, string, double>> tuples = new List<Tuple<string, string, string, double>>(maxLines * maxBuffer);
         public void AppendString(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
             if (this.isOutput)

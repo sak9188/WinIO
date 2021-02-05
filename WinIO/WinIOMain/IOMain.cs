@@ -52,6 +52,7 @@ namespace WinIO.IOConsole
             }
             catch (Exception e)
             {
+                MessageBox.Show("程序崩溃了,大概率是因为载入了不存在的Python模块所导致的.具体情况请在程序文件夹下的crash.log查看");
                 //获取项目的绝对路径
                 using (FileStream fs = new FileStream("./crash.log", FileMode.Append))
                 {
