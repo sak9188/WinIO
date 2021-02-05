@@ -40,7 +40,6 @@ namespace WinIO.IOConsole
         {
             PythonEngine.Initialize();
             WinIOAPP.RunWindow();
-            // dynamic sys = Py.Import("sys");
             dynamic CSharp = Py.Import("WinIO.CSharp");
             CSharp.APP = WinIOAPP.Instance;
             try

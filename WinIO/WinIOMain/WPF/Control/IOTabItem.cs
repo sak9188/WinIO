@@ -333,50 +333,58 @@ namespace WinIO.WPF.Control
 
         public void _AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
-            IORichTextBox box = richTextbox;
-            Paragraph p = (Paragraph)richTextbox.Document.Blocks.LastBlock;
-            Run r = new Run(s);
-            if (color != null)
+            IORichTextBox richTextbox = this.richTextbox;
+            Paragraph lastBlock = (Paragraph)this.richTextbox.Document.Blocks.LastBlock;
+            Run lastInline = (Run)lastBlock.Inlines.LastInline;
+            if ((lastInline != null) && (lastInline.Text.TrimEnd() == s))
             {
-                try
+                if (!(lastInline.PreviousInline is RunNumber))
                 {
-                    r.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                    lastBlock.Inlines.InsertBefore(lastInline, new RunNumber(2));
                 }
-                catch (System.FormatException)
+                else
                 {
-                    Console.WriteLine("错误的颜色字符串");
-                }
-            }
-            if (fontsize == 0)
-            {
-                fontsize = box.FontSize;
-            }
-            r.FontSize = fontsize;
-            if (fonfamily != null)
-            {
-                r.FontFamily = new System.Windows.Media.FontFamily(fonfamily);
-            }
-            p.Inlines.Add(r);
-            p.Inlines.Add(new LineBreak());
-
-            countLines += 1;
-
-            if (countLines == maxLines)
-            {
-                richTextbox.Document.Blocks.Add(new Paragraph());
-                countLines = 0;
-
-                // 当有3000行的时候，此时这个会移除掉最上面的1000行
-                if (richTextbox.Document.Blocks.Count >= maxBuffer)
-                {
-                    richTextbox.Document.Blocks.Remove(richTextbox.Document.Blocks.FirstBlock);
+                    RunNumber previousInline = lastInline.PreviousInline as RunNumber;
+                    previousInline.Number++;
                 }
             }
-
-            box.MinPageWidth = GetStringActuallyWidth(r) + fontsize;
-
-            // 无论输出端干了啥，必须得滚到最下面
-            richTextbox.ScrollToEnd();
+            else
+            {
+                Run item = new Run(s.TrimEnd() + "\n");
+                if (color != null)
+                {
+                    try
+                    {
+                        item.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("错误的颜色字符串");
+                    }
+                }
+                if (fontsize == 0.0)
+                {
+                    fontsize = richTextbox.FontSize;
+                }
+                item.FontSize = fontsize;
+                if (fonfamily != null)
+                {
+                    item.FontFamily = new FontFamily(fonfamily);
+                }
+                lastBlock.Inlines.Add(item);
+                this.countLines++;
+                if (this.countLines == maxLines)
+                {
+                    this.richTextbox.Document.Blocks.Add(new Paragraph());
+                    this.countLines = 0;
+                    if (this.richTextbox.Document.Blocks.Count >= maxBuffer)
+                    {
+                        this.richTextbox.Document.Blocks.Remove(this.richTextbox.Document.Blocks.FirstBlock);
+                    }
+                }
+                richTextbox.MinPageWidth = GetStringActuallyWidth(item) + fontsize;
+                this.richTextbox.ScrollToEnd();
+            }
         }
 
 
