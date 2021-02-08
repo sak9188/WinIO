@@ -61,6 +61,8 @@ namespace WinIO.WPF.Control
 
         public IOTabItem(string name, string style, bool isOutput = true)
         {
+            this.MinWidth = 20;
+
             this.isOutput = isOutput;
 
             // GRID
