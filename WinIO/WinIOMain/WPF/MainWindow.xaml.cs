@@ -125,6 +125,8 @@ namespace WinIO.WPF
             Init();
         }
 
+        //private UnityPage unityPage;
+
         private void Init()
         {
             InitializeComponent();
@@ -133,6 +135,10 @@ namespace WinIO.WPF
             tabs.Add(TabControl0);
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);
+
+            //unityPage = new UnityPage(this);
+
+            //WindowsFormsHost
         }
 
         public void SetWindowsSize(double height, double width)

@@ -18,7 +18,11 @@ namespace WinIO.WPF.Control
                 if(value > minPageWidth)
                 {
                     minPageWidth = value;
-
+                    this.Document.MinPageWidth = value;
+                }
+                else if(value == 0)
+                {
+                    minPageWidth = value;
                     this.Document.MinPageWidth = value;
                 }
             }

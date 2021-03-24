@@ -363,6 +363,7 @@
     <Compile Include="WPF\Control\IOTabControl.cs" />
     <Compile Include="WPF\Control\IOTabItem.cs" />
     <Compile Include="WPF\Control\RunNumber.cs" />
+    <Compile Include="WPF\Control\UnityPage.cs" />
     <Compile Include="WPF\Converter\MathConverter.cs" />
     <Compile Include="WPF\ExportPython\MenuItem.cs" />
     <Compile Include="WPF\ExportPython\TabItem.cs" />

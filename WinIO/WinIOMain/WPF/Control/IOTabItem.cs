@@ -248,16 +248,16 @@ namespace WinIO.WPF.Control
             }
             p.Inlines.Add(r);
 
-            double sum = 0;
-            foreach (Run i in p.Inlines)
-            {
-                sum += GetStringActuallyWidth(i);
-            }
+            //double sum = 0;
+            //foreach (Run i in p.Inlines)
+            //{
+            //    sum += GetStringActuallyWidth(i);
+            //}
 
-            richTextbox.MinPageWidth = sum + fontsize;
+            richTextbox.MinPageWidth = GetStringActuallyWidth(r) + fontsize;
 
             // 无论输出端干了啥，必须得滚到最下面
-            richTextbox.ScrollToEnd();
+            // richTextbox.ScrollToEnd();
         }
 
         public void AppendInputString(string s, string color = null, string fonfamily = null, double fontsize = 0)
@@ -265,12 +265,26 @@ namespace WinIO.WPF.Control
             this.textEditor.Text = s;
         }
 
+        private DispatcherTimer timer2;
         private List<Tuple<string, string, string, double>> tuples = new List<Tuple<string, string, string, double>>(maxLines * maxBuffer);
         public void AppendString(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
             if (this.isOutput)
             {
-                this.AppendOutputString(s, color, fonfamily, fontsize);
+                // this.AppendOutputString(s, color, fonfamily, fontsize);
+                if (this.isOutput)
+                {
+                    if (timer2 == null)
+                    {
+                        timer2 = new DispatcherTimer();
+                        // 16.6 ms 驱动一次 可以包装60帧
+                        timer2.Tag = new Action<string, string, string, double>(AppendOutputString);
+                        timer2.Interval = new TimeSpan(166000);
+                        timer2.Tick += new EventHandler(TimerDriveOutput);
+                        timer2.Start();
+                    }
+                    tuples.Add(new Tuple<string, string, string, double>(s, color, fonfamily, fontsize));
+                }
             }
             else
             {
@@ -291,7 +305,6 @@ namespace WinIO.WPF.Control
         readonly static int maxBuffer = 4;
 
         private DispatcherTimer timer;
-
         public void AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
             if (this.isOutput)
@@ -299,9 +312,9 @@ namespace WinIO.WPF.Control
                 if(timer == null)
                 {
                     timer = new DispatcherTimer();
-                    
-                    // 100 ms 驱动一次
-                    timer.Interval = new TimeSpan(1000000);
+                    // 16.6 ms 驱动一次 可以包装60帧
+                    timer.Tag = new Action<string, string, string, double>(_AppendLine);
+                    timer.Interval = new TimeSpan(166000);
                     timer.Tick += new EventHandler(TimerDriveOutput);
                     timer.Start();
                 }
@@ -311,7 +324,9 @@ namespace WinIO.WPF.Control
 
         private void TimerDriveOutput(object sender, EventArgs e)
         {
-            if(tuples.Count == 0)
+            DispatcherTimer timer = sender as DispatcherTimer;
+            Action<string, string, string, double> fun = (Action<string, string, string, double>)timer.Tag;
+            if (tuples.Count == 0)
             {
                 return;
             }
@@ -327,7 +342,7 @@ namespace WinIO.WPF.Control
                 {
                     break;
                 }
-                this._AppendLine(item.Item1, item.Item2, item.Item3, item.Item4);
+                fun(item.Item1, item.Item2, item.Item3, item.Item4);
                 count += 1;
             }
             tuples.RemoveRange(0, count);
@@ -453,9 +468,9 @@ namespace WinIO.WPF.Control
             if(this.isOutput)
             {
                 IORichTextBox box = richTextbox;
-                Paragraph p = (Paragraph)box.Document.Blocks.LastBlock;
-                p.Inlines.Clear();
-                richTextbox.MinPageWidth = 0;
+                box.Document.Blocks.Clear();
+                box.Document.Blocks.Add(new Paragraph());
+                box.MinPageWidth = 0.0f;
             }
             else
             {
