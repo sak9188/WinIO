@@ -265,8 +265,7 @@ namespace WinIO.WPF.Control
             this.textEditor.Text = s;
         }
 
-        private DispatcherTimer timer2;
-        private List<Tuple<string, string, string, double>> tuples = new List<Tuple<string, string, string, double>>(maxLines * maxBuffer);
+        private List<Tuple<int, string, string, string, double>> tuples = new List<Tuple<int, string, string, string, double>>(maxLines * maxBuffer);
         public void AppendString(string s, string color = null, string fonfamily = null, double fontsize = 0)
         {
             if (this.isOutput)
@@ -274,16 +273,15 @@ namespace WinIO.WPF.Control
                 // this.AppendOutputString(s, color, fonfamily, fontsize);
                 if (this.isOutput)
                 {
-                    if (timer2 == null)
+                    if (timer == null)
                     {
-                        timer2 = new DispatcherTimer();
+                        timer = new DispatcherTimer();
                         // 16.6 ms 驱动一次 可以包装60帧
-                        timer2.Tag = new Action<string, string, string, double>(AppendOutputString);
-                        timer2.Interval = new TimeSpan(166000);
-                        timer2.Tick += new EventHandler(TimerDriveOutput);
-                        timer2.Start();
+                        timer.Interval = new TimeSpan(166000);
+                        timer.Tick += new EventHandler(TimerDriveOutput);
+                        timer.Start();
                     }
-                    tuples.Add(new Tuple<string, string, string, double>(s, color, fonfamily, fontsize));
+                    tuples.Add(new Tuple<int, string, string, string, double>(0, s, color, fonfamily, fontsize));
                 }
             }
             else
@@ -318,14 +316,13 @@ namespace WinIO.WPF.Control
                     timer.Tick += new EventHandler(TimerDriveOutput);
                     timer.Start();
                 }
-                tuples.Add(new Tuple<string, string, string, double>(s, color, fonfamily, fontsize));
+                tuples.Add(new Tuple<int, string, string, string, double>(1, s, color, fonfamily, fontsize));
             }
         }
 
         private void TimerDriveOutput(object sender, EventArgs e)
         {
             DispatcherTimer timer = sender as DispatcherTimer;
-            Action<string, string, string, double> fun = (Action<string, string, string, double>)timer.Tag;
             if (tuples.Count == 0)
             {
                 return;
@@ -342,7 +339,14 @@ namespace WinIO.WPF.Control
                 {
                     break;
                 }
-                fun(item.Item1, item.Item2, item.Item3, item.Item4);
+                if(item.Item1 == 0)
+                {
+                    AppendOutputString(item.Item2, item.Item3, item.Item4, item.Item5);
+                }
+                else
+                {
+                    _AppendLine(item.Item2, item.Item3, item.Item4, item.Item5);
+                }
                 count += 1;
             }
             tuples.RemoveRange(0, count);
