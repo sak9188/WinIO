@@ -549,22 +549,6 @@ namespace WinIO.WPF.Control
             }
         }
 
-        protected override void OnGiveFeedback(GiveFeedbackEventArgs e)
-        {
-            base.OnGiveFeedback(e);
-
-            //Effects获取拖动类型
-            if (e.Effects.HasFlag(DragDropEffects.Move))
-            {
-                Mouse.SetCursor(Cursors.Hand);
-            }
-            else
-            {
-                Mouse.SetCursor(Cursors.No);
-            }
-            e.Handled = true;
-        }
-
         public int GetLineNumber()
         {
             if(textEditor != null)

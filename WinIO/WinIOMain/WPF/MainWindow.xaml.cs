@@ -126,7 +126,6 @@ namespace WinIO.WPF
         }
 
         //private UnityPage unityPage;
-
         private void Init()
         {
             InitializeComponent();
@@ -135,6 +134,9 @@ namespace WinIO.WPF
             tabs.Add(TabControl0);
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);
+            tabs.Add(TabControl3);
+            tabs.Add(TabControl4);
+            tabs.Add(TabControl5);
 
             //unityPage = new UnityPage(this);
 

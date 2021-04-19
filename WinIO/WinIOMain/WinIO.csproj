@@ -481,6 +481,7 @@
     <Content Include="WPF\CodeEditor\Properties\CodeAnalysisDictionary.xml" />
     <Content Include="WPF\CodeEditor\Search\next.png" />
     <Content Include="WPF\CodeEditor\Search\prev.png" />
+    <SplashScreen Include="splash.png" />
     <Resource Include="themes\RightArrow.cur" />
   </ItemGroup>
   <Target Name="ILMerge">
