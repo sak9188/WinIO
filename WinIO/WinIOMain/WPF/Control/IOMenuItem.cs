@@ -1,9 +1,12 @@
 ﻿using Python.Runtime;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace WinIO.WPF.Control
@@ -33,6 +36,12 @@ namespace WinIO.WPF.Control
         {
             this.Items.Add(subitem);
         }
+
+        //protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        //{
+        //    base.OnPropertyChanged(e);
+        //    // Debug.WriteLine("something");
+        //}
 
     }
 }

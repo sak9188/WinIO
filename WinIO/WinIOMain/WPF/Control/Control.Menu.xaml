@@ -224,7 +224,7 @@
              Value="true">
                 <Setter TargetName="Popup"
                         Property="PopupAnimation"
-                        Value="Fade" />
+                        Value="None" />
             </Trigger>
             <Trigger Property="IsHighlighted"
              Value="true">

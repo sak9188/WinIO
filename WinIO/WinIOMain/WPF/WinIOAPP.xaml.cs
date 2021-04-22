@@ -26,7 +26,8 @@ namespace WinIO.WPF
 
         public static Thread WindowThread;
 
-        public Python.Runtime.PyObject PyClosed;
+        public PyObject PyClosed;
+        public PyObject IsClosing;
 
         private static void LoadMainWindow()
         {
@@ -38,6 +39,7 @@ namespace WinIO.WPF
                 {
                     if (Instance.PyClosed != null)
                     {
+                        Instance.IsClosing = true.ToPython();
                         Instance.PyClosed.Invoke();
                     }
                 }
