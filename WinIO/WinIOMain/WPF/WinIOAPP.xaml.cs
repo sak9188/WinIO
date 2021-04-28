@@ -104,7 +104,7 @@ namespace WinIO.WPF
                     break;
                 }
                 var state = PythonEngine.BeginAllowThreads();
-                Thread.Sleep(10);
+                Thread.Sleep(100);
                 PythonEngine.EndAllowThreads(state);
             }
             PythonEngine.Shutdown();
