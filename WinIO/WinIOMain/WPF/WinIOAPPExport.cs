@@ -16,21 +16,35 @@ namespace WinIO.WPF
             Action del = () =>
             {
                 var window = ((MainWindow)Instance.MainWindow);
-                var s_version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                var version = window.CreateTopMenuItem("当前版本："+ s_version);
-                version.AddMenuItem(window.CreateMenuItem("1.8.1：加入初始化画面"));
-                version.AddMenuItem(window.CreateMenuItem("1.8.0：加入可以拖动tab按钮, tab按钮现在可以互换位置"));
-                version.AddMenuItem(window.CreateMenuItem("1.8.0：控制tab按钮的重排问题"));
-                version.AddMenuItem(window.CreateMenuItem("1.8.0：调整WinIO控制颜色,调整整体透明度"));
-                version.AddMenuItem(window.CreateMenuItem("1.8.0：调整Menu的颜色,透明度, 添加动画"));
-                version.AddMenuItem(window.CreateMenuItem("1.8.0：加入QDir布局"));
-                version.AddMenuItem(window.CreateMenuItem("加入：代码提示功能, 快捷注释，快捷反注释功能"));
-                version.AddMenuItem(window.CreateMenuItem("加入：Lua语法高亮,可交互IO,拖拽功能,自定义配置功能"));
-                version.AddMenuItem(window.CreateMenuItem("优化: 高强度IO环境下，可能会出现卡死的问题"));
-                version.AddMenuItem(window.CreateMenuItem("优化: 浅色主题下IO工具颜色对比度不高的问题"));
-                version.AddMenuItem(window.CreateMenuItem("取消：alt键多选的功能"));
-                version.AddMenuItem(window.CreateMenuItem("TODO：加入任意panel多选"));
-                
+                var version_item = window.CreateTopMenuItem("版本菜单");
+                window.VersionMenu = version_item;
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.3：加强版本控制"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.2：加入任意panel多选"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.1：加入初始化画面"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.0：加入可以拖动tab按钮, tab按钮现在可以互换位置"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.0：控制tab按钮的重排问题"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.0：调整WinIO控制颜色,调整整体透明度"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.0：调整Menu的颜色,透明度, 添加动画"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.0：加入QDir布局"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.0：代码提示功能, 快捷注释，快捷反注释功能"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.0：Lua语法高亮,可交互IO,拖拽功能,自定义配置功能"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.0: 高强度IO环境下，可能会出现卡死的问题"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.0: 浅色主题下IO工具颜色对比度不高的问题"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.0：alt键多选的功能"));
+                window.MainMenu.Items.Remove(window.VersionMenu);
+                var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+                Instance.NetSideVersion = $"{version.Major}.{version.Minor}.{version.Build}";
+                Instance.VersionMenu = new ExportPython.MenuItem("版本菜单", true, version_item);
+            };
+            Instance.Dispatcher.Invoke(del);
+        }
+
+        public static void AfterPythonInit()
+        {
+            Action del = () =>
+            {
+                var window = ((MainWindow)Instance.MainWindow);
+                window.MainMenu.Items.Add(window.VersionMenu);
             };
             Instance.Dispatcher.Invoke(del);
         }

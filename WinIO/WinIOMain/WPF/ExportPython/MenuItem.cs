@@ -17,6 +17,13 @@ namespace WinIO.WPF.ExportPython
             this.menuItem = topLevel ? CreateToplevelMenuItem(this) : CreateMenuItem(this);
         }
 
+        public MenuItem(string header, bool topLevel, IOMenuItem menuItem)
+        {
+            this.header = header;
+            this.topLevel = topLevel;
+            this.menuItem = menuItem;
+        }
+
         private IOMenuItem menuItem;
 
         private List<MenuItem> menuItems = new List<MenuItem>();
@@ -30,6 +37,7 @@ namespace WinIO.WPF.ExportPython
             set 
             {
                 header = value;
+                SetHeader(this, header);
             }
             get 
             {
@@ -59,6 +67,12 @@ namespace WinIO.WPF.ExportPython
             MenuItemAddMenuItem(this, item);
         }
 
+        public void SetForeColor(string color)
+        {
+            Action<IOMenuItem, string> del = (i, c) => {i.SetForeColor(c);};
+            WinIOAPP.Current.Dispatcher.Invoke(del, (IOMenuItem)this, color);
+        }
+
         private static IOMenuItem CreateToplevelMenuItem(MenuItem item)
         {
             Func<string, System.Windows.Controls.MenuItem> del = (s) => { return ((MainWindow)WinIOAPP.Instance.MainWindow).CreateTopMenuItem(s); };
@@ -81,6 +95,12 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOMenuItem, PyObject> del = (i, c) => { i.PyOnClick = c;};
             WinIOAPP.Current.Dispatcher.Invoke(del, (IOMenuItem)item, click);
+        }
+
+        private static void SetHeader(MenuItem item, string header)
+        {
+            Action<IOMenuItem, string> del = (i, c) => { i.Header = c; };
+            WinIOAPP.Current.Dispatcher.Invoke(del, (IOMenuItem)item, header);
         }
 
 

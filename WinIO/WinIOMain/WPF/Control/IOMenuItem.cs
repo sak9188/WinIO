@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WinIO.WPF.Control
 {
@@ -35,6 +36,18 @@ namespace WinIO.WPF.Control
         public void AddMenuItem(IOMenuItem subitem)
         {
             this.Items.Add(subitem);
+        }
+
+        public void SetForeColor(string color)
+        {
+            try
+            {
+                this.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
+            }
+            catch (FormatException)
+            {
+                Debug.WriteLine("wrong color string");
+            }
         }
 
         //protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)

@@ -29,6 +29,11 @@ namespace WinIO.WPF
         public PyObject PyClosed;
         public PyObject IsClosing;
 
+        public string PythonSideVersion = "";
+        public string NetSideVersion = "";
+
+        public ExportPython.MenuItem VersionMenu;
+
         private static void LoadMainWindow()
         {
             Instance.MainWindow = new MainWindow(Thread.CurrentThread);
@@ -56,10 +61,11 @@ namespace WinIO.WPF
             CSharp.APP = WinIOAPP.Instance;
             try
             {
+                WinIOAPP.CustomInit();
                 dynamic io = Py.Import("WinIOStart");
                 var state = PythonEngine.BeginAllowThreads();
-                WinIOAPP.CustomInit();
                 PythonEngine.EndAllowThreads(state);
+                WinIOAPP.AfterPythonInit();
             }
             catch (Exception e)
             {

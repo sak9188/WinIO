@@ -24,6 +24,8 @@ namespace WinIO.WPF
 
         private List<TabControl> tabs = new List<TabControl>();
 
+        public IOMenuItem VersionMenu;
+
         public IOMenuItem CreateTopMenuItem(string header)
         {
             IOMenuItem item = new IOMenuItem();
