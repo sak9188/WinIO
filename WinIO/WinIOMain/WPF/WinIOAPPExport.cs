@@ -11,14 +11,15 @@ namespace WinIO.WPF
 {
     public partial class WinIOAPP : Application
     {
-        public static void CustomInit()
+        private static void CustomInit()
         {
             Action del = () =>
             {
                 var window = ((MainWindow)Instance.MainWindow);
                 var version_item = window.CreateTopMenuItem("版本菜单");
                 window.VersionMenu = version_item;
-                version_item.AddMenuItem(window.CreateMenuItem("1.8.3：加强版本控制"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.4：巨幅提升性能"));
+                version_item.AddMenuItem(window.CreateMenuItem("1.8.3：加强版本控制, 优化崩溃界面"));
                 version_item.AddMenuItem(window.CreateMenuItem("1.8.2：加入任意panel多选"));
                 version_item.AddMenuItem(window.CreateMenuItem("1.8.1：加入初始化画面"));
                 version_item.AddMenuItem(window.CreateMenuItem("1.8.0：加入可以拖动tab按钮, tab按钮现在可以互换位置"));
@@ -39,7 +40,7 @@ namespace WinIO.WPF
             Instance.Dispatcher.Invoke(del);
         }
 
-        public static void AfterPythonInit()
+        private static void AfterPythonInit()
         {
             Action del = () =>
             {
@@ -82,6 +83,12 @@ namespace WinIO.WPF
         {
             Action<uint> del = (u) => { ((MainWindow)Instance.MainWindow).CloseTabPanel(u); };
             Instance.Dispatcher.Invoke(del, tabPanel);
+        }
+
+        public void SetWindowTitle(string title)
+        {
+            Action<string> del = (h) => { ((MainWindow)Instance.MainWindow).Title = h;};
+            Instance.Dispatcher.Invoke(del, title);
         }
     }
 }

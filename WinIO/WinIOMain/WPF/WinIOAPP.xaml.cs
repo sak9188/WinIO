@@ -69,7 +69,9 @@ namespace WinIO.WPF
             }
             catch (Exception e)
             {
-                MessageBox.Show("程序崩溃了,大概率是因为载入了不存在的Python模块所导致的.具体情况请在程序文件夹下的crash.log查看");
+                WinIOAPP.WindowThread.Abort();
+                MessageBox.Show("程序崩溃了,请检查Python模块导入是否正确，Python语法是否正确。具体情况请在程序文件夹下的crash.log查看如果有还有问题请私聊 宏康", "oh! 程序崩溃了",
+                                MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.ServiceNotification);
                 //获取项目的绝对路径
                 using (FileStream fs = new FileStream("./crash.log", FileMode.Append))
                 {

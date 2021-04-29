@@ -292,15 +292,13 @@ namespace WinIO.WPF.Control
 
         public static double GetStringActuallyWidth(Run r)
         {
-            return new FormattedText(r.Text, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
-                                    new Typeface(r.FontFamily, r.FontStyle, r.FontWeight, r.FontStretch),
-                                    r.FontSize, Brushes.Black).Width;
+            return r.Text.Length * 10;
         }
 
         private int countLines = 0;
 
-        readonly static int maxLines = 1500;
-        readonly static int maxBuffer = 4;
+        readonly static int maxLines = 200;
+        readonly static int maxBuffer = 5;
 
         private DispatcherTimer timer;
         public void AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
@@ -310,9 +308,9 @@ namespace WinIO.WPF.Control
                 if(timer == null)
                 {
                     timer = new DispatcherTimer();
-                    // 16.6 ms 驱动一次 可以包装60帧
+                    // 10 ms 驱动一次 可以100帧
                     timer.Tag = new Action<string, string, string, double>(_AppendLine);
-                    timer.Interval = new TimeSpan(166000);
+                    timer.Interval = new TimeSpan(100000);
                     timer.Tick += new EventHandler(TimerDriveOutput);
                     timer.Start();
                 }
@@ -335,7 +333,7 @@ namespace WinIO.WPF.Control
             int count = 0;
             foreach (var item in tuples)
             {
-                if(count >= 100)
+                if(count >= 5)
                 {
                     break;
                 }
@@ -348,6 +346,10 @@ namespace WinIO.WPF.Control
                     _AppendLine(item.Item2, item.Item3, item.Item4, item.Item5);
                 }
                 count += 1;
+            }
+            if (count != 0)
+            {
+                this.richTextbox.ScrollToEnd();
             }
             tuples.RemoveRange(0, count);
         }
@@ -404,7 +406,6 @@ namespace WinIO.WPF.Control
                     }
                 }
                 richTextbox.MinPageWidth = GetStringActuallyWidth(item) + fontsize;
-                this.richTextbox.ScrollToEnd();
             }
         }
 
