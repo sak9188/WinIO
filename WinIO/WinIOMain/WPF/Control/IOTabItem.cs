@@ -292,13 +292,15 @@ namespace WinIO.WPF.Control
 
         public static double GetStringActuallyWidth(Run r)
         {
-            return r.Text.Length * 10;
+            return new FormattedText(r.Text, CultureInfo.CurrentUICulture, FlowDirection.LeftToRight,
+                                    new Typeface(r.FontFamily, r.FontStyle, r.FontWeight, r.FontStretch),
+                                    r.FontSize, Brushes.Black).Width;
         }
 
         private int countLines = 0;
 
-        readonly static int maxLines = 200;
-        readonly static int maxBuffer = 5;
+        readonly static int maxLines = 300;
+        readonly static int maxBuffer = 4;
 
         private DispatcherTimer timer;
         public void AppendLine(string s, string color = null, string fonfamily = null, double fontsize = 0)
@@ -308,7 +310,7 @@ namespace WinIO.WPF.Control
                 if(timer == null)
                 {
                     timer = new DispatcherTimer();
-                    // 10 ms 驱动一次 可以100帧
+                    // 1 ms 驱动一次 可以100帧
                     timer.Tag = new Action<string, string, string, double>(_AppendLine);
                     timer.Interval = new TimeSpan(100000);
                     timer.Tick += new EventHandler(TimerDriveOutput);
@@ -320,7 +322,6 @@ namespace WinIO.WPF.Control
 
         private void TimerDriveOutput(object sender, EventArgs e)
         {
-            DispatcherTimer timer = sender as DispatcherTimer;
             if (tuples.Count == 0)
             {
                 return;
@@ -329,11 +330,10 @@ namespace WinIO.WPF.Control
             {
                 tuples.RemoveRange(0, tuples.Count - maxLines * (maxBuffer - 1));
             }
-
             int count = 0;
             foreach (var item in tuples)
             {
-                if(count >= 5)
+                if(count >= 10)
                 {
                     break;
                 }
@@ -347,10 +347,7 @@ namespace WinIO.WPF.Control
                 }
                 count += 1;
             }
-            if (count != 0)
-            {
-                this.richTextbox.ScrollToEnd();
-            }
+
             tuples.RemoveRange(0, count);
         }
 
@@ -373,7 +370,7 @@ namespace WinIO.WPF.Control
             }
             else
             {
-                Run item = new Run(s.TrimEnd() + "\n");
+                Run item = new Run(s);
                 if (color != null)
                 {
                     try
@@ -406,6 +403,7 @@ namespace WinIO.WPF.Control
                     }
                 }
                 richTextbox.MinPageWidth = GetStringActuallyWidth(item) + fontsize;
+                richTextbox.ScrollToEnd();
             }
         }
 
