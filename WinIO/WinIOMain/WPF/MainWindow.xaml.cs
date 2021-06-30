@@ -26,11 +26,14 @@ namespace WinIO.WPF
 
         public IOMenuItem VersionMenu;
 
-        public IOMenuItem CreateTopMenuItem(string header)
+        public IOMenuItem CreateTopMenuItem(string header, bool autoAdd=true)
         {
             IOMenuItem item = new IOMenuItem();
             item.Header = header;
-            MainMenu.Items.Add(item);
+            if(autoAdd)
+            {
+                MainMenu.Items.Add(item);
+            }
             item.Click += MenuItem_Click;
             return item;
         }
@@ -132,7 +135,6 @@ namespace WinIO.WPF
         {
             InitializeComponent();
             System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Critical;
-            
             tabs.Add(TabControl0);
             tabs.Add(TabControl1);
             tabs.Add(TabControl2);

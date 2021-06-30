@@ -65,7 +65,6 @@ namespace WinIO.WPF
                 dynamic io = Py.Import("WinIOStart");
                 var state = PythonEngine.BeginAllowThreads();
                 PythonEngine.EndAllowThreads(state);
-                WinIOAPP.AfterPythonInit();
             }
             catch (Exception e)
             {

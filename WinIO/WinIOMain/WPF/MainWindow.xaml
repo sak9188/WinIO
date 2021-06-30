@@ -7,8 +7,8 @@
         xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
         fw:AcrylicWindow.Enabled="False"
-        Title="WinIO" Height="900" Width="1500" TintOpacity="0.70"
-        BorderBrush="#66000000">
+        Title="WinIO" Height="900" Width="1500" TintOpacity="0.9"
+        BorderBrush="#33000000" TintColor="#E72D2D2D" FallbackColor="#2D2D2D">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,10 +17,14 @@
                 <ResourceDictionary Source="Main.xaml"/>
                 <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="SystemBaseHighColor">#ffffff</Color>
+
+            <SolidColorBrush x:Key="splitter" Color="#99ffffff"/>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" Background="#88000000" fw:PointerTracker.Enabled="True">
+    <Grid x:Name="MainGrid" Background="#37A0A0A0" fw:PointerTracker.Enabled="True">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="GridRow0" Height="Auto"/>
             <RowDefinition x:Name="GridRow1" Height="*"/>
@@ -35,20 +39,18 @@
             <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
         <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
-              Background="#33F0F0F0" FontSize="13" Foreground="{DynamicResource SystemAltMediumHighColorBrush}">
+              Background="#13474747" FontSize="13" Foreground="{DynamicResource SystemAltMediumHighColorBrush}">
 
         </Menu>
         <local:IOTabControl Grid.Row="1" x:Name="TabControl0" Style="{StaticResource TabControlKey}"/>
-        <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1"  Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1"  Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
         <local:IOTabControl Grid.Row="1" Grid.Column="2" x:Name="TabControl1" Style="{StaticResource TabControlKey}" />
-        <GridSplitter Grid.Row="1" x:Name="Splitter1" Grid.Column="3" Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Row="1" x:Name="Splitter1" Grid.Column="3" Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
         <local:IOTabControl Grid.Row="1" Grid.Column="4" x:Name="TabControl2" Style="{StaticResource TabControlKey}"/>
         <local:IOTabControl Grid.Row="3" Grid.Column="0" x:Name="TabControl3" Style="{StaticResource TabControlKey}"/>
         <local:IOTabControl Grid.Row="3" Grid.Column="2" x:Name="TabControl4" Style="{StaticResource TabControlKey}"/>
         <local:IOTabControl Grid.Row="3" Grid.Column="4" x:Name="TabControl5" Style="{StaticResource TabControlKey}"/>
-
-
-        <GridSplitter Grid.Row="2" Grid.Column="0" Height="5" Grid.ColumnSpan="5" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="2" Grid.Column="0" Height="5" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
 
     </Grid>
 </fw:AcrylicWindow>

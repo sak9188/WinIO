@@ -13,4 +13,6 @@
     <Style TargetType="{x:Type editing:LineNumberMargin}">
         <Setter Property="Control.Cursor" Value="/WinIO;component/themes/RightArrow.cur"/>
     </Style>
+
+    
 </ResourceDictionary>
