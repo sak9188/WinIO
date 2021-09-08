@@ -1,4 +1,4 @@
-﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Highlighting;
 using Python.Runtime;
@@ -13,9 +13,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
 namespace WinIO.WPF.Control
@@ -26,6 +28,7 @@ namespace WinIO.WPF.Control
         private TextEditor textEditor;
         private Grid grid;
         private WrapPanel wrapPanel;
+        private StatusBar statusBar;
         private bool isOutput;
         private string orignalHeader;
 
@@ -55,8 +58,6 @@ namespace WinIO.WPF.Control
 
         CompletionWindow completionWindow;
 
-        // private TextBlock wrapPanelName;
-
         private Dictionary<string, PyObject> clicks = new Dictionary<string, PyObject>();
 
         public IOTabItem(string name, string style, bool isOutput = true)
@@ -71,6 +72,10 @@ namespace WinIO.WPF.Control
             topRow.Height = GridLength.Auto;
             grid.RowDefinitions.Add(topRow);
             grid.RowDefinitions.Add(new RowDefinition());
+            var secRow = new RowDefinition();
+            secRow.Height = GridLength.Auto;
+            grid.RowDefinitions.Add(secRow);
+
             this.grid = grid;
 
             if(isOutput)
@@ -123,6 +128,94 @@ namespace WinIO.WPF.Control
         }
 
 
+        private TextBlock statusBarPrefixText;
+        private TextBlock statusBarSuffixText;
+        private ProgressBar progressBar;
+
+        public void ShowProgressBar()
+        {
+            if (this.isOutput)
+            {
+                if (statusBar == null)
+                {
+                    statusBar = new StatusBar();
+                    statusBar.Background = new SolidColorBrush(Color.FromRgb(40, 44, 52));
+                    statusBar.Foreground = new SolidColorBrush(Colors.White);
+
+                    var descTextBlock = new StatusBarItem();
+                    statusBarPrefixText = new TextBlock();
+                    descTextBlock.Content = statusBarPrefixText;
+
+                    progressBar = new ProgressBar();
+                    progressBar.IsIndeterminate = false;
+                    progressBar.Orientation = Orientation.Horizontal;
+                    progressBar.Height = 20;
+                    progressBar.Width = 200;
+                    progressBar.Value = 100;
+
+                    var suffixDescTextBlock = new StatusBarItem();
+                    statusBarSuffixText = new TextBlock();
+                    suffixDescTextBlock.Content = statusBarSuffixText;
+
+                    statusBar.Items.Add(descTextBlock);
+                    statusBar.Items.Add(progressBar);
+                    statusBar.Items.Add(new Separator());
+                    statusBar.Items.Add(suffixDescTextBlock);
+
+                    grid.Children.Add(statusBar);
+                    Grid.SetRow(statusBar, 2);
+                }
+                else
+                {
+                    statusBar.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        public void HideProgressBar()
+        {
+            if (this.isOutput)
+            {
+                if (statusBar != null)
+                {
+                    statusBar.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        public void SetProgressBarValue(double value)
+        {
+            if (progressBar != null)
+            {
+                if (value > 100)
+                {
+                    value = 100;
+                }
+                else if(value < 0)
+                {
+                    value = 0;
+                }
+
+                Duration duration = new Duration(TimeSpan.FromSeconds(0.5));
+                progressBar.BeginAnimation(ProgressBar.ValueProperty, new DoubleAnimation(value, duration));
+            }
+        }
+
+        public void SetStatusText(string text)
+        {
+            if (statusBarPrefixText != null)
+            {
+                statusBarPrefixText.Text = text;
+            }
+        }
+
+        public void SetStatusSuffixText(string text)
+        {
+            if (statusBarSuffixText != null)
+            {
+                statusBarSuffixText.Text = text;
+            }
+        }
 
         private void TextEditor_KeyUp(object sender, KeyEventArgs e)
         {

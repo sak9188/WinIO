@@ -1,14 +1,9 @@
-﻿using Python.Runtime;
-using SourceChord.FluentWPF;
+using Python.Runtime;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using WinIO.WPF.Control;
 
 namespace WinIO.WPF
@@ -95,6 +90,7 @@ namespace WinIO.WPF
                 var item = CreateInputTextBox(name);
                 item.TabPanelID = (int)tabPanel;
                 panel.Items.Add(item);
+
                 if (panel.Items.Count == 1)
                 {
                     panel.SelectedIndex = 0;

@@ -1,4 +1,4 @@
-﻿<fw:AcrylicWindow x:Class="WinIO.WPF.MainWindow"
+<fw:AcrylicWindow x:Class="WinIO.WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,13 +13,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/WinIO;component/wpf/control/Control.Menu.xaml"/>
-                <ResourceDictionary Source="control/Control.xaml"/>
                 <ResourceDictionary Source="Main.xaml"/>
                 <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
+                <ResourceDictionary Source="control/Control.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Color x:Key="SystemBaseHighColor">#ffffff</Color>
-
             <SolidColorBrush x:Key="splitter" Color="#99ffffff"/>
         </ResourceDictionary>
     </Window.Resources>
@@ -38,18 +37,19 @@
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="40*" />
         </Grid.ColumnDefinitions>
+
         <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
               Background="#13474747" FontSize="13" Foreground="{DynamicResource SystemAltMediumHighColorBrush}">
 
         </Menu>
-        <local:IOTabControl Grid.Row="1" x:Name="TabControl0" Style="{StaticResource TabControlKey}"/>
+        <local:IOTabControl Grid.Row="1" x:Name="TabControl0"/>
         <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1"  Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
-        <local:IOTabControl Grid.Row="1" Grid.Column="2" x:Name="TabControl1" Style="{StaticResource TabControlKey}" />
+        <local:IOTabControl Grid.Row="1" Grid.Column="2" x:Name="TabControl1"/>
         <GridSplitter Grid.Row="1" x:Name="Splitter1" Grid.Column="3" Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
-        <local:IOTabControl Grid.Row="1" Grid.Column="4" x:Name="TabControl2" Style="{StaticResource TabControlKey}"/>
-        <local:IOTabControl Grid.Row="3" Grid.Column="0" x:Name="TabControl3" Style="{StaticResource TabControlKey}"/>
-        <local:IOTabControl Grid.Row="3" Grid.Column="2" x:Name="TabControl4" Style="{StaticResource TabControlKey}"/>
-        <local:IOTabControl Grid.Row="3" Grid.Column="4" x:Name="TabControl5" Style="{StaticResource TabControlKey}"/>
+        <local:IOTabControl Grid.Row="1" Grid.Column="4" x:Name="TabControl2"/>
+        <local:IOTabControl Grid.Row="3" Grid.Column="0" x:Name="TabControl3"/>
+        <local:IOTabControl Grid.Row="3" Grid.Column="2" x:Name="TabControl4"/>
+        <local:IOTabControl Grid.Row="3" Grid.Column="4" x:Name="TabControl5"/>
         <GridSplitter Grid.Row="2" Grid.Column="0" Height="5" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
 
     </Grid>

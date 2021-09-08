@@ -1,4 +1,4 @@
-﻿using Python.Runtime;
+using Python.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -332,6 +332,36 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOTabItem> del = (i) => { i.Clear(); };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        public void ShowProgressBar()
+        {
+            Action<IOTabItem> del = (i) => { i.ShowProgressBar(); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        public void HideProgressBar()
+        {
+            Action<IOTabItem> del = (i) => { i.HideProgressBar(); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this);
+        }
+
+        public void SetProgressBarValue(double value)
+        {
+            Action<IOTabItem, double> del = (i, v) => { i.SetProgressBarValue(v); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, value);
+        }
+
+        public void SetStatusText(string text)
+        {
+            Action<IOTabItem, string> del = (i, v) => { i.SetStatusText(v); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, text);
+        }
+
+        public void SetStatusSuffixText(string text)
+        {
+            Action<IOTabItem, string> del = (i, v) => { i.SetStatusSuffixText(v); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, text);
         }
 
         public static implicit operator TabItem(IOTabItem item)
