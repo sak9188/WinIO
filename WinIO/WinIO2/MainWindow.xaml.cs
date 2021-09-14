@@ -1,4 +1,4 @@
-﻿using Cosine.Windows.Effects;
+using Cosine.Windows.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +22,23 @@ namespace WinIO2
     /// </summary>
     public partial class MainWindow : Window
     {
-        WindowAccentCompositor AcrylicBrush;
         public MainWindow()
         {
             InitializeComponent();
-            AcrylicBrush = new WindowAccentCompositor(this);
-            AcrylicBrush.IsEnabled = true;
-            var a = this.Template;
+            control.ItemsSource = item_list;
+            item_list.Add("1123");
+            item_list.Add("2342");
+            item_list.Add("+");
+        }
+
+        public List<string> item_list = new List<string>();
+
+        private void UIElement_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var newItem = new TabItem();
+            control.Items.Insert(control.Items.Count - 1, newItem);
+            control.SelectedIndex = control.Items.Count - 2;
+            e.Handled = true;
         }
     }
 }

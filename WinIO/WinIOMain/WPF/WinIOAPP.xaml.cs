@@ -49,6 +49,9 @@ namespace WinIO.WPF
 
         public static void RealMain()
         {
+            //Instance.MainWindow = new MainWindow(Thread.CurrentThread);
+            //System.Windows.Threading.Dispatcher.Run();
+
             PythonEngine.Initialize();
             WinIOAPP.RunWindow();
             dynamic CSharp = Py.Import("WinIO.CSharp");
@@ -121,7 +124,7 @@ namespace WinIO.WPF
 
         public static void RunWindow()
         {
-            WindowThread = new Thread(new ThreadStart(LoadMainWindow));
+            WindowThread = new Thread(LoadMainWindow);
             WindowThread.SetApartmentState(ApartmentState.STA);
             WindowThread.Name = "WPFThread";
             WindowThread.IsBackground = true;
@@ -131,9 +134,9 @@ namespace WinIO.WPF
         public WinIOAPP()
         {
             // 在异常由应用程序引发但未进行处理时发生。主要指的是UI线程。
-            this.DispatcherUnhandledException += new DispatcherUnhandledExceptionEventHandler(App_DispatcherUnhandledException);
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
             //  当某个异常未被捕获时出现。主要指的是非UI线程
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

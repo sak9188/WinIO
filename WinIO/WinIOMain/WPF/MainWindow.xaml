@@ -6,20 +6,55 @@
         xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF" 
         xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
-        fw:AcrylicWindow.Enabled="False"
+        Foreground="White"
         Title="WinIO" Height="900" Width="1500" TintOpacity="0.9"
-        BorderBrush="#33000000" TintColor="#E72D2D2D" FallbackColor="#2D2D2D">
+        TintColor="#E72D2D2D" FallbackColor="#2D2D2D">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/WinIO;component/wpf/control/Control.Menu.xaml"/>
-                <ResourceDictionary Source="Main.xaml"/>
-                <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
                 <ResourceDictionary Source="control/Control.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Color x:Key="SystemBaseHighColor">#ffffff</Color>
             <SolidColorBrush x:Key="splitter" Color="#99ffffff"/>
+
+            <!--<Style x:Key="PlusItem" TargetType="{x:Type TabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Border Background="Transparent">
+                                <Grid>
+                                    <Grid>
+                                        <Border x:Name="TabItemBorder"
+                                            CornerRadius="3,3,0,0"
+                                            Margin="1"              
+                                            Background="{DynamicResource SystemBaseLowColorBrush}"
+                                            BorderThickness="0"/>
+                                    </Grid>
+                                    <ContentPresenter Margin="10,5" Content="+"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                            TextBlock.Foreground="White">
+                                    </ContentPresenter>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                    <Setter TargetName="TabItemBorder"
+                                        Property="Background"
+                                        Value="{DynamicResource SystemBaseMediumLowColorBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected"
+                                     Value="True">
+                                    <Setter TargetName="TabItemBorder"
+                                        Property="Background"
+                                        Value="{DynamicResource SystemBaseMediumColorBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>-->
         </ResourceDictionary>
     </Window.Resources>
 
@@ -39,7 +74,7 @@
         </Grid.ColumnDefinitions>
 
         <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
-              Background="#13474747" FontSize="13" Foreground="{DynamicResource SystemAltMediumHighColorBrush}">
+              Background="#13474747" FontSize="13" Foreground="White">
 
         </Menu>
         <local:IOTabControl Grid.Row="1" x:Name="TabControl0"/>

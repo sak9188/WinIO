@@ -76,6 +76,11 @@ namespace WinIO.WPF
                 if (panel.Items.Count == 1)
                 {
                     panel.SelectedIndex = 0;
+                    //var plus_item = new TabItem();
+                    //var test_obj = (Style)this.Resources["PlusItem"];
+                    //plus_item.Style = test_obj;
+                    //plus_item.ApplyTemplate();
+                    //panel.Items.Add(plus_item);
                 }
                 return item;
             }

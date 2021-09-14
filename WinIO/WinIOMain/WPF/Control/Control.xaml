@@ -5,9 +5,9 @@
     xmlns:fw="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/FluentWPF;component/Styles/Controls.xaml"/>
+        <ResourceDictionary Source="/FluentWPF;component/Styles/Button.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
-
+    
     <Style TargetType="{x:Type local:IOTabItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -16,17 +16,15 @@
                         <Grid>
                             <Grid>
                                 <Border x:Name="TabItemBorder"
-                                            CornerRadius="3,3,0,0"
+                                            CornerRadius="8"
                                             Margin="1"              
-                                            Background="{DynamicResource SystemBaseLowColorBrush}"
+                                            Background="#333333"
                                             BorderThickness="0"/>
                             </Grid>
                             <ContentPresenter ContentSource="Header" Margin="10,5"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                             TextBlock.Foreground="White"/>
-
-
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -34,19 +32,20 @@
                                      Value="True">
                             <Setter TargetName="TabItemBorder"
                                         Property="Background"
-                                        Value="{DynamicResource SystemBaseMediumLowColorBrush}" />
+                                        Value="#777777" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                      Value="True">
                             <Setter TargetName="TabItemBorder"
                                         Property="Background"
-                                        Value="{DynamicResource SystemBaseMediumColorBrush}" />
+                                        Value="#111111"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
 
     <Style x:Key="OutputTextBox" TargetType="RichTextBox">
         <Setter Property="AcceptsReturn" Value="True"/>
@@ -83,11 +82,14 @@
         <Setter Property="Margin" Value="3"/>
         <Setter Property="FontSize" Value="12.5"/>
         <Setter Property="Padding" Value="7,4"/>
-        <Setter Property="Foreground" Value="{StaticResource SystemAltMediumHighColorBrush}"/>
-        <Setter Property="fw:RevealElement.MouseOverForeground" Value="{StaticResource SystemAltMediumHighColorBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="fw:RevealElement.MouseOverForeground" Value="BlanchedAlmond"/>
     </Style>
 
     <Style TargetType="{x:Type local:IOTabControl}" >
+        <Setter Property="Background" Value="#90000000" />
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="AllowDrop" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -122,16 +124,12 @@
                             
                         <Border x:Name="Border"
                                 Grid.Row="1"
-                                BorderThickness="1"
+                                BorderThickness="0"
                                 CornerRadius="2"
                                 KeyboardNavigation.TabNavigation="Local"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 KeyboardNavigation.TabIndex="2"
                                 Background="#4F001000">
-
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource BorderMediumColor}"/>
-                            </Border.BorderBrush>
                             <ContentPresenter x:Name="PART_SelectedContentHost"
                               Margin="2"
                               ContentSource="SelectedContent" />
