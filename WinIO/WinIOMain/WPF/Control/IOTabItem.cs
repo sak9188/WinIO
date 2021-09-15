@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using WinIO.WPF.Command;
 
 namespace WinIO.WPF.Control
 {
@@ -35,11 +36,11 @@ namespace WinIO.WPF.Control
         public int TabPanelID { set; get; }
 
         private PyObject pyComDataList;
-        public PyObject PyComDataList 
-        { 
+        public PyObject PyComDataList
+        {
             set
             {
-                if(PyList.IsListType(value))
+                if (PyList.IsListType(value))
                 {
                     pyComDataList = value;
                 }
@@ -78,7 +79,7 @@ namespace WinIO.WPF.Control
 
             this.grid = grid;
 
-            if(isOutput)
+            if (isOutput)
             {
                 // RICHBOX
                 IORichTextBox textBox = new IORichTextBox();
@@ -112,8 +113,11 @@ namespace WinIO.WPF.Control
                 this.textEditor = textEditor;
                 grid.Children.Add(textEditor);
                 Grid.SetRow(textEditor, 1);
-                
+
             }
+
+            this.ClickCloseBtnCommand = new RelayCommand(collapseItem);
+            DataContext = this;
 
             // WrapPanel
             WrapPanel panel = new WrapPanel();
@@ -191,7 +195,7 @@ namespace WinIO.WPF.Control
                 {
                     value = 100;
                 }
-                else if(value < 0)
+                else if (value < 0)
                 {
                     value = 0;
                 }
@@ -261,7 +265,7 @@ namespace WinIO.WPF.Control
             PyObject click = null;
             if (clicks.TryGetValue((string)bu.Content, out click))
             {
-                using(Py.GIL())
+                using (Py.GIL())
                 {
                     click.Invoke();
                 }
@@ -279,7 +283,8 @@ namespace WinIO.WPF.Control
                     return true;
                 }
                 return false;
-            }else
+            }
+            else
             {
                 var temp = textEditor;
                 if (temp != null)
@@ -293,7 +298,7 @@ namespace WinIO.WPF.Control
 
         public bool SetFontFamily(string s)
         {
-            if(isOutput)
+            if (isOutput)
             {
                 IORichTextBox temp = richTextbox;
                 if (temp != null)
@@ -400,7 +405,7 @@ namespace WinIO.WPF.Control
         {
             if (this.isOutput)
             {
-                if(timer == null)
+                if (timer == null)
                 {
                     timer = new DispatcherTimer();
                     // 1 ms 驱动一次 可以100帧
@@ -419,18 +424,18 @@ namespace WinIO.WPF.Control
             {
                 return;
             }
-            else if(tuples.Count > maxLines * (maxBuffer - 1))
+            else if (tuples.Count > maxLines * (maxBuffer - 1))
             {
                 tuples.RemoveRange(0, tuples.Count - maxLines * (maxBuffer - 1));
             }
             int count = 0;
             foreach (var item in tuples)
             {
-                if(count >= 10)
+                if (count >= 10)
                 {
                     break;
                 }
-                if(item.Item1 == 0)
+                if (item.Item1 == 0)
                 {
                     AppendOutputString(item.Item2, item.Item3, item.Item4, item.Item5);
                 }
@@ -448,56 +453,40 @@ namespace WinIO.WPF.Control
         {
             IORichTextBox richTextbox = this.richTextbox;
             Paragraph lastBlock = (Paragraph)this.richTextbox.Document.Blocks.LastBlock;
-            Run lastInline = (Run)lastBlock.Inlines.LastInline;
-            if ((lastInline != null) && (lastInline.Text.TrimEnd() == s))
+            Run item = new Run(s);
+            if (color != null)
             {
-                if (!(lastInline.PreviousInline is RunNumber))
+                try
                 {
-                    lastBlock.Inlines.InsertBefore(lastInline, new RunNumber(2));
+                    item.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
                 }
-                else
+                catch (FormatException)
                 {
-                    RunNumber previousInline = lastInline.PreviousInline as RunNumber;
-                    previousInline.Number++;
+                    Console.WriteLine("错误的颜色字符串");
                 }
             }
-            else
+            if (fontsize == 0.0)
             {
-                Run item = new Run(s);
-                if (color != null)
-                {
-                    try
-                    {
-                        item.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color));
-                    }
-                    catch (FormatException)
-                    {
-                        Console.WriteLine("错误的颜色字符串");
-                    }
-                }
-                if (fontsize == 0.0)
-                {
-                    fontsize = richTextbox.FontSize;
-                }
-                item.FontSize = fontsize;
-                if (fonfamily != null)
-                {
-                    item.FontFamily = new FontFamily(fonfamily);
-                }
-                lastBlock.Inlines.Add(item);
-                this.countLines++;
-                if (this.countLines == maxLines)
-                {
-                    this.richTextbox.Document.Blocks.Add(new Paragraph());
-                    this.countLines = 0;
-                    if (this.richTextbox.Document.Blocks.Count >= maxBuffer)
-                    {
-                        this.richTextbox.Document.Blocks.Remove(this.richTextbox.Document.Blocks.FirstBlock);
-                    }
-                }
-                richTextbox.MinPageWidth = GetStringActuallyWidth(item) + fontsize;
-                richTextbox.ScrollToEnd();
+                fontsize = richTextbox.FontSize;
             }
+            item.FontSize = fontsize;
+            if (fonfamily != null)
+            {
+                item.FontFamily = new FontFamily(fonfamily);
+            }
+            lastBlock.Inlines.Add(item);
+            this.countLines++;
+            if (this.countLines == maxLines)
+            {
+                this.richTextbox.Document.Blocks.Add(new Paragraph());
+                this.countLines = 0;
+                if (this.richTextbox.Document.Blocks.Count >= maxBuffer)
+                {
+                    this.richTextbox.Document.Blocks.Remove(this.richTextbox.Document.Blocks.FirstBlock);
+                }
+            }
+            richTextbox.MinPageWidth = GetStringActuallyWidth(item) + fontsize;
+            richTextbox.ScrollToEnd();
         }
 
 
@@ -549,11 +538,12 @@ namespace WinIO.WPF.Control
 
         public string GetText()
         {
-            if(this.isOutput)
+            if (this.isOutput)
             {
                 TextRange textRange = new TextRange(richTextbox.Document.ContentStart, richTextbox.Document.ContentEnd);
                 return textRange.Text;
-            }else
+            }
+            else
             {
                 return textEditor.Text;
             }
@@ -561,7 +551,7 @@ namespace WinIO.WPF.Control
 
         public void Clear()
         {
-            if(this.isOutput)
+            if (this.isOutput)
             {
                 IORichTextBox box = richTextbox;
                 box.Document.Blocks.Clear();
@@ -581,10 +571,11 @@ namespace WinIO.WPF.Control
 
         public void SetRichBoxKeyDownEvent(PyObject pyKeyDown)
         {
-            if(this.isOutput)
+            if (this.isOutput)
             {
                 richTextbox.PyKeyDown = pyKeyDown;
-            }else
+            }
+            else
             {
                 PyInputObject = pyKeyDown;
             }
@@ -604,9 +595,9 @@ namespace WinIO.WPF.Control
 
         public void Selected()
         {
-            if(PyOnSelected != null)
+            if (PyOnSelected != null)
             {
-                using(Py.GIL())
+                using (Py.GIL())
                 {
                     PyOnSelected.Invoke();
                 }
@@ -615,7 +606,7 @@ namespace WinIO.WPF.Control
 
         public void SetSyntaxHighlighting(string format)
         {
-            if(textEditor != null)
+            if (textEditor != null)
             {
                 var typeConverter = new HighlightingDefinitionTypeConverter();
                 textEditor.SyntaxHighlighting = (IHighlightingDefinition)typeConverter.ConvertFrom(format);
@@ -643,7 +634,7 @@ namespace WinIO.WPF.Control
 
         public int GetLineNumber()
         {
-            if(textEditor != null)
+            if (textEditor != null)
             {
                 return textEditor.TextArea.Caret.Line;
             }
@@ -665,7 +656,7 @@ namespace WinIO.WPF.Control
 
         public string GetLineString(int line)
         {
-            if(line > 0 && textEditor.Document.LineCount >= line)
+            if (line > 0 && textEditor.Document.LineCount >= line)
             {
                 int start = textEditor.Document.GetOffset(line, 0);
                 int end = textEditor.Document.GetLineByNumber(line).Length;
@@ -724,7 +715,7 @@ namespace WinIO.WPF.Control
                 completionWindow.ResizeMode = ResizeMode.NoResize;
                 var data = completionWindow.CompletionList.CompletionData;
                 int len;
-                if(list.Count > 0 && int.TryParse(list[0], out len))
+                if (list.Count > 0 && int.TryParse(list[0], out len))
                 {
                     list.RemoveAt(0);
                     foreach (var item in list)
@@ -734,12 +725,32 @@ namespace WinIO.WPF.Control
                     if (data.Count > 0)
                     {
                         completionWindow.Show();
-                        completionWindow.Closed += delegate {
+                        completionWindow.Closed += delegate
+                        {
                             completionWindow = null;
                         };
                     }
                 }
             }
         }
+
+        public RelayCommand ClickCloseBtnCommand { get; set; }
+
+        private void collapseItem()
+        {
+            IOTabControl control = this.Parent as IOTabControl;
+            if (this.IsSelected)
+            {
+                control.SelectedIndex = 0;
+            }
+            this.Visibility = Visibility.Collapsed;
+            var content = this.Content as UIElement;
+            content.Visibility = Visibility.Collapsed;
+
+            var window = WinIOAPP.Current.MainWindow as WinIO.WPF.MainWindow;
+            window.CreatePanelMenuItem(this.orignalHeader, this);
+        }
     }
+
+   
 }

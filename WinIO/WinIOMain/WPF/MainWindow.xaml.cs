@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using WinIO.WPF.Command;
 using WinIO.WPF.Control;
 
 namespace WinIO.WPF
@@ -20,6 +22,23 @@ namespace WinIO.WPF
         private List<TabControl> tabs = new List<TabControl>();
 
         public IOMenuItem VersionMenu;
+
+        public IOMenuItem CreatePanelMenuItem(string header, IOTabItem tabItem)
+        {
+            IOMenuItem item = new IOMenuItem();
+            item.Header = header;
+            item.Command = new RelayCommand(()=>showItem(item, tabItem));
+            PanelMenu.Items.Add(item);
+            return item;
+        }
+
+        private void showItem(IOMenuItem item, IOTabItem tabItem)
+        {
+            tabItem.Visibility = Visibility.Visible;
+            var content = tabItem.Content as UIElement;
+            content.Visibility = Visibility.Visible;
+            PanelMenu.Items.Remove(item);
+        }
 
         public IOMenuItem CreateTopMenuItem(string header, bool autoAdd=true)
         {
@@ -76,11 +95,6 @@ namespace WinIO.WPF
                 if (panel.Items.Count == 1)
                 {
                     panel.SelectedIndex = 0;
-                    //var plus_item = new TabItem();
-                    //var test_obj = (Style)this.Resources["PlusItem"];
-                    //plus_item.Style = test_obj;
-                    //plus_item.ApplyTemplate();
-                    //panel.Items.Add(plus_item);
                 }
                 return item;
             }
@@ -144,7 +158,6 @@ namespace WinIO.WPF
             tabs.Add(TabControl5);
 
             //unityPage = new UnityPage(this);
-
             //WindowsFormsHost
         }
 

@@ -227,9 +227,8 @@
                  TargetType="{x:Type local:IOMenuItem}">
         <Border x:Name="Border">
             <Grid>
-                <ContentPresenter Margin="6,3"
-                        ContentSource="Header"
-                        RecognizesAccessKey="True" />
+                <TextBlock Padding="12,9" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Text="{Binding Header,RelativeSource={RelativeSource TemplatedParent}}"/>
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -427,10 +426,8 @@
     </ControlTemplate>
 
     <!-- MenuItem Style -->
-    <Style x:Key="{x:Type MenuItem}"
-       TargetType="{x:Type local:IOMenuItem}">
-        <Setter Property="OverridesDefaultStyle"
-          Value="True" />
+    <Style TargetType="{x:Type local:IOMenuItem}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Template"

@@ -7,85 +7,62 @@
         xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
         Foreground="White"
-        Title="WinIO" Height="900" Width="1500" TintOpacity="0.9"
+        Title="WinIO" Height="900" Width="1500" TintOpacity="0.8"
         TintColor="#E72D2D2D" FallbackColor="#2D2D2D">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/WinIO;component/wpf/control/Control.Menu.xaml"/>
                 <ResourceDictionary Source="control/Control.xaml"/>
+                <ResourceDictionary Source="control/Control.Menu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <SolidColorBrush x:Key="splitter" Color="#99ffffff"/>
-
-            <!--<Style x:Key="PlusItem" TargetType="{x:Type TabItem}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TabItem}">
-                            <Border Background="Transparent">
-                                <Grid>
-                                    <Grid>
-                                        <Border x:Name="TabItemBorder"
-                                            CornerRadius="3,3,0,0"
-                                            Margin="1"              
-                                            Background="{DynamicResource SystemBaseLowColorBrush}"
-                                            BorderThickness="0"/>
-                                    </Grid>
-                                    <ContentPresenter Margin="10,5" Content="+"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                            TextBlock.Foreground="White">
-                                    </ContentPresenter>
-                                </Grid>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                    <Setter TargetName="TabItemBorder"
-                                        Property="Background"
-                                        Value="{DynamicResource SystemBaseMediumLowColorBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsSelected"
-                                     Value="True">
-                                    <Setter TargetName="TabItemBorder"
-                                        Property="Background"
-                                        Value="{DynamicResource SystemBaseMediumColorBrush}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>-->
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" Background="#37A0A0A0" fw:PointerTracker.Enabled="True">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="GridRow0" Height="Auto"/>
-            <RowDefinition x:Name="GridRow1" Height="*"/>
-            <RowDefinition x:Name="GridRow2" Height="5"/>
-            <RowDefinition x:Name="GridRow3" Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="GridCol0" Width="30*"></ColumnDefinition>
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="40*" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="40*" />
-        </Grid.ColumnDefinitions>
+        <Menu x:Name="MainMenu"
+              Background="#13474747" FontSize="13" Foreground="White"/>
+        <Menu Grid.Row="1" x:Name="PanelMenu"
+              Background="#13474747" FontSize="13" Foreground="White"/>
 
-        <Menu x:Name="MainMenu" Grid.Row="0" Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, ElementName=MainGrid}"
-              Background="#13474747" FontSize="13" Foreground="White">
+        <Grid Grid.Row="2" x:Name="MainGrid" Background="#37A0A0A0" fw:PointerTracker.Enabled="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:IOTabControl Grid.Row="0" x:Name="TabControl0"/>
 
-        </Menu>
-        <local:IOTabControl Grid.Row="1" x:Name="TabControl0"/>
-        <GridSplitter Grid.Row="1" x:Name="Splitter0" Grid.Column="1"  Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
-        <local:IOTabControl Grid.Row="1" Grid.Column="2" x:Name="TabControl1"/>
-        <GridSplitter Grid.Row="1" x:Name="Splitter1" Grid.Column="3" Grid.RowSpan="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
-        <local:IOTabControl Grid.Row="1" Grid.Column="4" x:Name="TabControl2"/>
-        <local:IOTabControl Grid.Row="3" Grid.Column="0" x:Name="TabControl3"/>
-        <local:IOTabControl Grid.Row="3" Grid.Column="2" x:Name="TabControl4"/>
-        <local:IOTabControl Grid.Row="3" Grid.Column="4" x:Name="TabControl5"/>
-        <GridSplitter Grid.Row="2" Grid.Column="0" Height="5" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
+            <GridSplitter Grid.Row="0" Grid.Column="1"  Grid.RowSpan="3" Width="5"
+                          HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
 
+            <local:IOTabControl Grid.Row="0" Grid.Column="2" x:Name="TabControl1"/>
+            <GridSplitter Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Width="5"
+                          HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
+
+            <local:IOTabControl Grid.Row="0" Grid.Column="4" x:Name="TabControl2"/>
+
+            <GridSplitter Grid.Row="1" Grid.Column="0" Height="5" Grid.ColumnSpan="5"
+                          HorizontalAlignment="Stretch" Background="{StaticResource splitter}"/>
+
+            <local:IOTabControl Grid.Row="2" Grid.Column="0" x:Name="TabControl3"/>
+            <local:IOTabControl Grid.Row="2" Grid.Column="2" x:Name="TabControl4"/>
+            <local:IOTabControl Grid.Row="2" Grid.Column="4" x:Name="TabControl5"/>
+        </Grid>
     </Grid>
+
+
+
 </fw:AcrylicWindow>

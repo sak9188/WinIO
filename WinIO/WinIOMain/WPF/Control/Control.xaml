@@ -15,16 +15,89 @@
                     <Border Background="Transparent">
                         <Grid>
                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
                                 <Border x:Name="TabItemBorder"
-                                            CornerRadius="8"
-                                            Margin="1"              
-                                            Background="#333333"
-                                            BorderThickness="0"/>
+                                        Grid.ColumnSpan="2"
+                                        CornerRadius="8"
+                                        Margin="1"
+                                        Padding="10"
+                                        Background="#333333"
+                                        BorderThickness="0"/>
+                                <ContentPresenter ContentSource="Header" Margin="10,5,0,5"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  TextBlock.Foreground="White" Grid.Column="0" TextBlock.FontSize="14"/>
+                                <Button x:Name="btnCloseButton" Grid.Column="1" Margin="6" Width="20" Height="20"
+                                        Background="#3f424c" Foreground="White" Command="{Binding ClickCloseBtnCommand}">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Grid>
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+                                                        <VisualState x:Name="Normal">
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PART_Background"
+                                                                    To="0" Duration="0:0:0.150">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseIn"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="MouseOver">
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PART_Background"
+                                                         To="0.6" Duration="0:0:0.150">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <ExponentialEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Pressed">
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PART_Background"
+                                                         To="1" Duration="0:0:0.150">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <ExponentialEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Disabled">
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PART_Background"
+                                                         To="0.0" Duration="0:0:0.150">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <CubicEase EasingMode="EaseIn"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PART_Present"
+                                                         To="0.3" Duration="0:0:0.150">
+                                                                    <DoubleAnimation.EasingFunction>
+                                                                        <ExponentialEase EasingMode="EaseOut"/>
+                                                                    </DoubleAnimation.EasingFunction>
+                                                                </DoubleAnimation>
+                                                            </Storyboard>
+                                                        </VisualState>
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+                                                <Border x:Name="PART_Background" BorderBrush="{TemplateBinding Control.BorderBrush}"
+                                                    Background="{TemplateBinding Control.Background}"
+                                                    BorderThickness="0" CornerRadius="3">
+                                                </Border>
+                                                <ContentPresenter x:Name="PART_Present" Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <Path Width="8" Height="8" Data="M0.7,0 L5,4.3 L9.3,0 L10,0.7 L5.7,5 L10,9.3 L9.3,10 L5,5.7 L0.7,10 L0,9.3 L4.3,5 L0,0.7 z"
+                                          Fill="{Binding (TextBlock.Foreground), RelativeSource={RelativeSource AncestorType=ContentPresenter}}"
+                                          RenderTransformOrigin="0.5,0.5" Stretch="Uniform"/>
+                                </Button>
                             </Grid>
-                            <ContentPresenter ContentSource="Header" Margin="10,5"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                            TextBlock.Foreground="White"/>
+
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
