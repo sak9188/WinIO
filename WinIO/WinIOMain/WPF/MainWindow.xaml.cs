@@ -125,6 +125,7 @@ namespace WinIO.WPF
         public void CloseTab(IOTabItem item)
         {
             var tab = tabs[item.TabPanelID];
+            item.AfterClose();
             tab.Items.Remove(item);
         }
 

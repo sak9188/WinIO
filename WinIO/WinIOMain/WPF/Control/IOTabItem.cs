@@ -795,6 +795,15 @@ namespace WinIO.WPF.Control
                 showIoMenuItem.Header = this.Header;
             }
         }
+
+        public void AfterClose()
+        {
+            if (showIoMenuItem != null)
+            {
+                var menu = showIoMenuItem.Parent as Menu;
+                menu.Items.Remove(showIoMenuItem);
+            }
+        }
     }
 
    
