@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -131,6 +132,29 @@ namespace WinIO.WPF.Control
             orignalHeader = name;
         }
 
+        private Button btnCloseButton;
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            var tem = this.Template;
+            btnCloseButton = (Button)tem.FindName("btnCloseButton", this);
+            //ShowCloseButton(false);
+        }
+
+        public void ShowCloseButton(bool show=true)
+        {
+            if (btnCloseButton != null)
+            {
+                if (show)
+                {
+                    btnCloseButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    btnCloseButton.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
 
         private TextBlock statusBarPrefixText;
         private TextBlock statusBarSuffixText;
@@ -566,6 +590,9 @@ namespace WinIO.WPF.Control
 
         public bool IsCurrent()
         {
+            var control = this.Parent as IOTabControl;
+            if (control.SelectedIndex == -1)
+                return false;
             return this.IsSelected;
         }
 
@@ -735,20 +762,38 @@ namespace WinIO.WPF.Control
         }
 
         public RelayCommand ClickCloseBtnCommand { get; set; }
+        private IOMenuItem showIoMenuItem;
 
         private void collapseItem()
         {
             IOTabControl control = this.Parent as IOTabControl;
-            if (this.IsSelected)
-            {
-                control.SelectedIndex = 0;
-            }
             this.Visibility = Visibility.Collapsed;
             var content = this.Content as UIElement;
             content.Visibility = Visibility.Collapsed;
 
-            var window = WinIOAPP.Current.MainWindow as WinIO.WPF.MainWindow;
-            window.CreatePanelMenuItem(this.orignalHeader, this);
+            if (this.IsSelected)
+            {
+                control.SelectedIndex = -1;
+                foreach (IOTabItem item in control.Items)
+                {
+                    if (item.Visibility == Visibility.Visible)
+                    {
+                        control.SelectedItem = item;
+                        break;
+                    }
+                }
+
+            }
+            var window = WinIOAPP.Current.MainWindow as WinIO.WPF.MainWindow; 
+            showIoMenuItem = window.CreatePanelMenuItem(this.Header, this);
+        }
+
+        public void AfterSetHeader()
+        {
+            if (showIoMenuItem != null)
+            {
+                showIoMenuItem.Header = this.Header;
+            }
         }
     }
 

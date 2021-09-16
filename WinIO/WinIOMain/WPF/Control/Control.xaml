@@ -26,10 +26,10 @@
                                         Padding="10"
                                         Background="#333333"
                                         BorderThickness="0"/>
-                                <ContentPresenter ContentSource="Header" Margin="10,5,0,5"
+                                <ContentPresenter ContentSource="Header" Margin="10,5,10,5"
                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
                                                   TextBlock.Foreground="White" Grid.Column="0" TextBlock.FontSize="14"/>
-                                <Button x:Name="btnCloseButton" Grid.Column="1" Margin="6" Width="20" Height="20"
+                                <Button x:Name="btnCloseButton" Grid.Column="1" Margin="0,6,6,6" Width="20" Height="20"
                                         Background="#3f424c" Foreground="White" Command="{Binding ClickCloseBtnCommand}">
                                     <Button.Template>
                                         <ControlTemplate TargetType="{x:Type Button}">

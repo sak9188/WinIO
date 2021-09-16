@@ -185,7 +185,7 @@ namespace WinIO.WPF.ExportPython
 
         private void SetHeader(string str)
         {
-            Action<IOTabItem, string> del = (i, s) => { i.Header = s; };
+            Action<IOTabItem, string> del = (i, s) => { i.Header = s;  i.AfterSetHeader(); };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, str);
         }
 
@@ -362,6 +362,12 @@ namespace WinIO.WPF.ExportPython
         {
             Action<IOTabItem, string> del = (i, v) => { i.SetStatusSuffixText(v); };
             WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, text);
+        }
+
+        public void ShowCloseButton(bool show)
+        {
+            Action<IOTabItem, bool> del = (i, v) => { i.ShowCloseButton(v); };
+            WinIOAPP.Instance.Dispatcher.Invoke(del, (IOTabItem)this, show);
         }
 
         public static implicit operator TabItem(IOTabItem item)

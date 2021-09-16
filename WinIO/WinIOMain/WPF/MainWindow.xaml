@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:WinIO.WPF.Control"
         mc:Ignorable="d"
         Foreground="White"
-        Title="WinIO" Height="900" Width="1500" TintOpacity="0.8"
+        Title="WinIO" Height="900" Width="1500" TintOpacity="0.7"
         TintColor="#E72D2D2D" FallbackColor="#2D2D2D">
     <Window.Resources>
         <ResourceDictionary>

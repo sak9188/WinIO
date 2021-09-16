@@ -23,7 +23,7 @@ namespace WinIO.WPF
 
         public IOMenuItem VersionMenu;
 
-        public IOMenuItem CreatePanelMenuItem(string header, IOTabItem tabItem)
+        public IOMenuItem CreatePanelMenuItem(object header, IOTabItem tabItem)
         {
             IOMenuItem item = new IOMenuItem();
             item.Header = header;
@@ -37,6 +37,9 @@ namespace WinIO.WPF
             tabItem.Visibility = Visibility.Visible;
             var content = tabItem.Content as UIElement;
             content.Visibility = Visibility.Visible;
+            var control = tabItem.Parent as IOTabControl;
+            control.SelectedItem = tabItem;
+
             PanelMenu.Items.Remove(item);
         }
 
